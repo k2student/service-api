@@ -25,7 +25,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlType;
 
 import org.kuali.student.r2.common.infc.Comparison;
@@ -33,7 +32,7 @@ import org.kuali.student.r2.common.infc.Comparison;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ComparisonInfo", propOrder = {
-                "fieldKey", "operator", "values", "isIgnoreCase" })//, "_futureElements" }) TODO KSCM-372: Non-GWT translatable code
+                "fieldKey", "operator", "values", "isIgnoreCase" , "_futureElements" }) 
 
 public class ComparisonInfo 
     implements Comparison, Serializable {
@@ -52,9 +51,9 @@ public class ComparisonInfo
     @XmlElement
     private boolean isIgnoreCase;
 
-//    TODO KSCM-372: Non-GWT translatable code
-//    @XmlAnyElement
-//    private List<Element> _futureElements;
+    
+    @XmlAnyElement
+    private List<Object> _futureElements;
 
 
     /**

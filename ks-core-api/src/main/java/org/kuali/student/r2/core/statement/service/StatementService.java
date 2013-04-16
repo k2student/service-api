@@ -37,14 +37,14 @@ import org.kuali.student.r2.common.exceptions.VersionMismatchException;
 import org.kuali.student.r2.core.statement.dto.RefStatementRelationInfo;
 import org.kuali.student.r2.core.statement.dto.ReqComponentInfo;
 import org.kuali.student.r2.core.statement.dto.StatementInfo;
-import org.kuali.student.r1.common.search.service.SearchService;
+import org.kuali.student.r2.core.search.service.SearchService;
 import org.kuali.student.r1.core.statement.dto.StatementTreeViewInfo;
 
 
 /**
  * Statement Service
  *
- * @Version 2.0
+ * @version 0.0.7
  * @Author Sri komandur@uw.edu
  */
 @WebService(name = "StatementService", targetNamespace = org.kuali.student.r2.core.constants.StatementServiceConstants.NAMESPACE)
@@ -983,10 +983,7 @@ public interface StatementService extends SearchService {
      */
     public StatusInfo deleteStatementTreeView(@WebParam(name = "statementId") String statementId, @WebParam(name = "contextInfo") ContextInfo contextInfo) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException;
 
-    @Deprecated
-	public String getNaturalLanguageForReqComponent(String reqComponentId,
-			String string, String string2);
-    
+
     /**
      * Retrieves a list of object statement relationships for a particular object.
      * 

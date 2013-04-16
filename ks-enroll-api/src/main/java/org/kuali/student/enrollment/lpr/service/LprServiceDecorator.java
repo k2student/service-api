@@ -12,6 +12,8 @@ package org.kuali.student.enrollment.lpr.service;
 
 import java.util.List;
 
+import javax.jws.WebParam;
+
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
 import org.kuali.student.enrollment.lpr.dto.*;
 import org.kuali.student.r2.common.dto.BulkStatusInfo;
@@ -149,8 +151,20 @@ public class LprServiceDecorator implements LprService {
     public List<LprInfo> getLprsByLui(String luiId, ContextInfo contextInfo) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
         return getNextDecorator().getLprsByLui(luiId, contextInfo);
     }
+    
+    
 
     @Override
+	public List<LprInfo> getLprsByLuis(
+			@WebParam(name = "luiIds") List<String> luiIds,
+			@WebParam(name = "contextInfo") ContextInfo contextInfo)
+			throws DoesNotExistException, InvalidParameterException,
+			MissingParameterException, OperationFailedException,
+			PermissionDeniedException {
+		return getNextDecorator().getLprsByLuis(luiIds, contextInfo);
+	}
+
+	@Override
     public List<LprInfo> getLprsByIds(List<String> lprIds, ContextInfo contextInfo) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
         return getNextDecorator().getLprsByIds(lprIds, contextInfo);
     }
@@ -219,4 +233,44 @@ public class LprServiceDecorator implements LprService {
     public LprInfo createLpr(String personId, String luiId, String lprTypeKey, LprInfo lprInfo, ContextInfo contextInfo) throws DataValidationErrorException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, ReadOnlyException {
         return getNextDecorator().createLpr(personId, luiId, lprTypeKey, lprInfo, contextInfo);
     }
+
+    /* (non-Javadoc)
+     * @see org.kuali.student.enrollment.lpr.service.LprService#validateLprTransaction(java.lang.String, java.lang.String, org.kuali.student.enrollment.lpr.dto.LprTransactionInfo, org.kuali.student.r2.common.dto.ContextInfo)
+     */
+    @Override
+    public List<ValidationResultInfo> validateLprTransaction(
+           String validationType,
+           String lprTransactionType,
+           LprTransactionInfo lprTransactionInfo,
+           ContextInfo contextInfo)
+            throws DoesNotExistException, InvalidParameterException,
+            MissingParameterException, OperationFailedException,
+            PermissionDeniedException {
+        return getNextDecorator().validateLprTransaction(validationType, lprTransactionType, lprTransactionInfo, contextInfo);
+    }
+
+	@Override
+	public StatusInfo changeLprState(String lprId,
+			String nextStateKey,
+			ContextInfo contextInfo)
+			throws DoesNotExistException, InvalidParameterException,
+			MissingParameterException, OperationFailedException,
+			PermissionDeniedException {
+		return getNextDecorator().changeLprState(lprId, nextStateKey, contextInfo);
+	}
+
+	@Override
+	public StatusInfo changeLprTransactionState(
+			String lprTransactionId,
+			String nextStateKey,
+			ContextInfo contextInfo)
+			throws DoesNotExistException, InvalidParameterException,
+			MissingParameterException, OperationFailedException,
+			PermissionDeniedException {
+		return getNextDecorator().changeLprTransactionState(lprTransactionId, nextStateKey, contextInfo);
+	}
+
+   
+    
+    
 }

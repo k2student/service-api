@@ -4,14 +4,15 @@
  */
 package org.kuali.student.r2.core.search.util;
 
+import org.kuali.student.r2.core.search.dto.SearchResultInfo;
+import org.kuali.student.r2.core.search.dto.SearchResultRowInfo;
+
+import javax.persistence.Query;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Query;
-import org.kuali.student.r2.core.search.dto.SearchResultInfo;
-import org.kuali.student.r2.core.search.dto.SearchResultRowInfo;
 
 /**
  * Help convert to and from Search objects
@@ -72,7 +73,7 @@ public class SearchResultCreatorHelper {
     }  
     
     /** 
-     * Process all the results of the query converting them to a SearchResultRow and 
+     * Process all the results of the query converting them to a SearchResultRowInfo and
      * adding it to the search result
      * 
      * Calls addSearchResultRow for each row returned by the query

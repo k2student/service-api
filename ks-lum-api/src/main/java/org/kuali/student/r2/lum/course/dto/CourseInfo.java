@@ -17,6 +17,7 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -25,6 +26,9 @@ import org.kuali.student.r2.common.dto.IdEntityInfo;
 import org.kuali.student.r2.common.dto.RichTextInfo;
 import org.kuali.student.r2.common.dto.TimeAmountInfo;
 import org.kuali.student.r2.core.versionmanagement.dto.VersionInfo;
+import org.kuali.student.r2.lum.clu.dto.AffiliatedOrgInfo;
+import org.kuali.student.r2.lum.clu.dto.CluInstructorInfo;
+import org.kuali.student.r2.lum.clu.infc.CluInstructor;
 import org.kuali.student.r2.lum.course.infc.Course;
 import org.kuali.student.r2.lum.course.infc.CourseCrossListing;
 import org.kuali.student.r2.lum.course.infc.CourseFee;
@@ -32,9 +36,6 @@ import org.kuali.student.r2.lum.course.infc.CourseJoint;
 import org.kuali.student.r2.lum.course.infc.CourseRevenue;
 import org.kuali.student.r2.lum.course.infc.Format;
 import org.kuali.student.r2.lum.course.infc.LoDisplay;
-import org.kuali.student.r2.lum.clu.dto.AffiliatedOrgInfo;
-import org.kuali.student.r2.lum.clu.dto.CluInstructorInfo;
-import org.kuali.student.r2.lum.clu.infc.CluInstructor;
 import org.kuali.student.r2.lum.lrc.dto.ResultValuesGroupInfo;
 //import org.w3c.dom.Element;                             A
 
@@ -80,9 +81,9 @@ import org.kuali.student.r2.lum.lrc.dto.ResultValuesGroupInfo;
         "endTerm",
         "effectiveDate",
         "expirationDate",
-        "versionInfo",
+        "version",
         "meta",
-        "attributes"})//, "_futureElements" }) TODO KSCM-372: Non-GWT translatable code
+        "attributes", "_futureElements" }) 
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class CourseInfo extends IdEntityInfo implements Course, Serializable {
@@ -150,10 +151,9 @@ public class CourseInfo extends IdEntityInfo implements Course, Serializable {
     @XmlElement
     private Date expirationDate;
     @XmlElement
-    private VersionInfo versionInfo;
-//    TODO KSCM-372: Non-GWT translatable code
-//    @XmlAnyElement
-//    private List<Element> _futureElements;
+    private VersionInfo version;
+    @XmlAnyElement
+    private List<Object> _futureElements;  
 
     public CourseInfo() {
         super();
@@ -274,7 +274,7 @@ public class CourseInfo extends IdEntityInfo implements Course, Serializable {
                     ? new ArrayList<String>(courseInfo.getUnitsContentOwner())
                     : new ArrayList<String>();
 
-            this.versionInfo = new VersionInfo(courseInfo.getVersionInfo());
+            this.version = new VersionInfo(courseInfo.getVersion());
 
         }
     }
@@ -611,11 +611,11 @@ public class CourseInfo extends IdEntityInfo implements Course, Serializable {
     }
 
     @Override
-    public VersionInfo getVersionInfo() {
-        return versionInfo;
+    public VersionInfo getVersion() {
+        return version;
     }
 
-    public void setVersionInfo(VersionInfo versionInfo) {
-        this.versionInfo = versionInfo;
+    public void setVersion(VersionInfo version) {
+        this.version = version;
     }
 }

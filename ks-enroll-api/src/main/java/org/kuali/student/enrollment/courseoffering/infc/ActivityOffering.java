@@ -16,11 +16,11 @@
 
 package org.kuali.student.enrollment.courseoffering.infc;
 
+import org.kuali.student.r2.common.infc.IdEntity;
+import org.kuali.student.r2.common.infc.TimeAmount;
+
 import java.util.Date;
 import java.util.List;
-
-import org.kuali.student.r2.common.infc.TimeAmount;
-import org.kuali.student.r2.common.infc.IdEntity;
 
 /**
  * Individual activity offerings correspond to events in a scheduling
@@ -43,7 +43,6 @@ public interface ActivityOffering extends IdEntity {
      * Format offering Name used to create this activity
      *
      * @name Format Offering Name
-     * @required
      * @readonly
      */
     public String getFormatOfferingName();
@@ -64,7 +63,6 @@ public interface ActivityOffering extends IdEntity {
      * offering.
      * 
      * @name Term Id
-     * @required
      * @readonly
      * @impl map to Lui.getAtpId
      */
@@ -77,7 +75,6 @@ public interface ActivityOffering extends IdEntity {
      * offering.
      *
      * @name Term Code
-     * @required
      * @readonly
      * @impl map to Lui.getAtpCode
      */
@@ -113,7 +110,7 @@ public interface ActivityOffering extends IdEntity {
      * Indicates that the course is an Honors Course.
      *
      * @name Is Honors Offering
-     * @required
+     *
      */
     public Boolean getIsHonorsOffering();
 
@@ -150,7 +147,6 @@ public interface ActivityOffering extends IdEntity {
      * Course Offering code the activity is being offered in.
      *
      * @name Course Offering Code
-     * @required
      * @readonly
      * @impl maps to the containing formatOffering's courseOffering's code
      */
@@ -160,28 +156,27 @@ public interface ActivityOffering extends IdEntity {
      * Course Offering title the activity is being offered in.
      *
      * @name Course Offering Title
-     * @required
      * @readonly
      * @impl maps to the containing formatOffering's courseOffering's title
      */
     public String getCourseOfferingTitle();
 
-    /********************** Final Exam Information ******************/
+    /********************** Final ExamOffering Information ******************/
     /**
      * Start time of final exam
-     * @name Final Exam StartTime
+     * @name Final ExamOffering StartTime
      */
     public Date getFinalExamStartTime();
 
     /**
      * End time of final exam.
-     * @name Final Exam EndTime
+     * @name Final ExamOffering EndTime
      */
     public Date getFinalExamEndTime();
 
     /**
      * Space code where final exam will be conducted
-     * @name Final Exam Space Code
+     * @name Final ExamOffering Space Code
      */
     public String getFinalExamSpaceCode();
 
@@ -255,7 +250,6 @@ public interface ActivityOffering extends IdEntity {
      * Indicates whether a RegistrationGroup has a waitlist.
      *
      * @name Has Waitlist
-     * @required
      * @impl maps to Lui.hasWaitlist
      */
     public Boolean getHasWaitlist();
@@ -281,7 +275,6 @@ public interface ActivityOffering extends IdEntity {
      * Indicates if the waitlist requires checkin.
      *
      * @name Is Waitlist Checkin Required
-     * @required
      * @impl maps to Lui.isWaitlistCheckinRequired
      */
     public Boolean getIsWaitlistCheckinRequired();
@@ -293,4 +286,14 @@ public interface ActivityOffering extends IdEntity {
      * @impl maps to Lui.waitlistCheckinFrequency
      */
     public TimeAmount getWaitlistCheckinFrequency();
+
+    /**
+     * Indicates that the activity offering is part of a ColocatedOfferingSet.
+     * This is a derived flag, managed without persistence
+     *
+     * @name Is Part Of Colocated Offering Set
+     * @readOnly
+     */
+    public Boolean getIsPartOfColocatedOfferingSet();
+
 }

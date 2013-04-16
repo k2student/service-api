@@ -17,6 +17,7 @@ package org.kuali.student.r2.core.constants;
 import org.kuali.student.r2.common.constants.CommonServiceConstants;
 import org.kuali.student.r2.core.population.dto.PopulationInfo;
 import org.kuali.student.r2.core.population.dto.PopulationRuleInfo;
+import org.kuali.student.r2.core.population.service.PopulationService;
 
 /**
  * This class holds the constants used by the Population service.
@@ -28,6 +29,7 @@ public class PopulationServiceConstants {
     /**
      * Reference Object URI's
      */
+    public static final String SERVICE_NAME_LOCAL_PART = PopulationService.class.getSimpleName ();
     public static final String NAMESPACE = CommonServiceConstants.REF_OBJECT_URI_GLOBAL_PREFIX + "population";
     public static final String REF_OBJECT_URI_POPULATION = NAMESPACE + "/" + PopulationInfo.class.getSimpleName();
     public static final String REF_OBJECT_URI_POPULATION_RULE = NAMESPACE + "/" + PopulationRuleInfo.class.getSimpleName();
@@ -45,6 +47,15 @@ public class PopulationServiceConstants {
     public static final String POPULATION_RULE_TYPE_UNION_KEY = "kuali.population.rule.type.union";
     public static final String POPULATION_RULE_TYPE_INTERSECTION_KEY = "kuali.population.rule.type.intersection";
     public static final String POPULATION_RULE_TYPE_EXCLUSION_KEY = "kuali.population.rule.type.exclusion";
+
+    public static final String[] POPULATION_RULE_TYPE_KEYS = {
+            PopulationServiceConstants.POPULATION_RULE_TYPE_RULE_KEY,
+            PopulationServiceConstants.POPULATION_RULE_TYPE_PERSON_KEY,
+            PopulationServiceConstants.POPULATION_RULE_TYPE_SEARCH_KEY,
+            PopulationServiceConstants.POPULATION_RULE_TYPE_UNION_KEY,
+            PopulationServiceConstants.POPULATION_RULE_TYPE_INTERSECTION_KEY,
+            PopulationServiceConstants.POPULATION_RULE_TYPE_EXCLUSION_KEY
+    };
 
     /**
      * States for Population Rule

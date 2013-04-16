@@ -28,11 +28,12 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.kuali.student.r2.core.search.infc.SearchParam;
+
 //import org.w3c.dom.Element;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SearchParamInfo", propOrder = {
-    "key", "values"})//, "_futureElements" }) TODO KSCM-372: Non-GWT translatable code
+    "key", "values", "_futureElements" }) 
 public class SearchParamInfo
         implements SearchParam, Serializable {
 
@@ -41,9 +42,8 @@ public class SearchParamInfo
     private String key;
     @XmlElement
     private List<String> values;
-//    TODO KSCM-372: Non-GWT translatable code
-//    @XmlAnyElement
-//    private List<Element> _futureElements;
+    @XmlAnyElement
+    private List<Object> _futureElements;  
 
     /**
      * Constructs a new SearchParamInfo.
@@ -103,48 +103,10 @@ public class SearchParamInfo
 
     @Override
     public List<String> getValues() {
-        return values;
-    }
-
-    /** 
-     * R1 compatibility method to return the value
-     * as an object
-     * If there is only one value set it returns that as a String otherwise it 
-     * returns the value as a list
-     * @deprecated
-     */
-    @Deprecated
-    public Object getValue() {
-        if (values == null) {
-            return null;
-        }
-        if (values.size() == 1) {
-            return values.get(0);
+        if (values == null){
+            values = new ArrayList<String>();
         }
         return values;
-    }
-
-    /** 
-     * R1 compatibility method to set the value as a string
-     * 
-     * Equivalent to calling setValues (Arrays.asList (value))
-     * 
-     * @deprecated
-     */
-    @Deprecated
-    public void setValue(String value) {
-        this.values = Arrays.asList(value);
-    }
-
-    /** 
-     * R1 compatibility method to set the value as a list 
-     * equivalent to calling setValues
-     * as a string
-     * @deprecated
-     */
-    @Deprecated
-    public void setValue(List<String> values) {
-        this.values = values;
     }
 
     public void setValues(List<String> values) {

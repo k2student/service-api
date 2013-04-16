@@ -17,7 +17,7 @@
 package org.kuali.student.r2.core.organization.service;
 
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
-import org.kuali.student.r1.common.search.service.SearchService;
+import org.kuali.student.r2.core.search.service.SearchService;
 import org.kuali.student.r2.common.dto.ContextInfo;
 import org.kuali.student.r2.common.dto.StatusInfo;
 import org.kuali.student.r2.core.class1.type.dto.TypeInfo;
@@ -42,23 +42,19 @@ import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import java.util.List;
 
-/**
- * <h3><a name="KSDOC-ServiceDescriptions-Description"></a>Description</h3>
- * 
- * <p>The Organization service manages organizational units that have
+/** 
+ * The Organization service manages organizational units that have
  * some relationship to the institution and manages the relationships
  * between people and those organization. Internal organizations
  * include officially recognized organizations (such as schools and
  * departments) and unofficial organizations (such as clubs or student
  * groups). Organizations may also be external to the institution,
  * such as companies, other institutions, government,
- * associations.</p>
+ * associations.
  * 
- * <h3><a name="KSDOC-ServiceDescriptions-Assumptions"></a>Assumptions</h3>
+ * The design of this service considers the following assumptions:
  * 
- * <p>The design of this service considers the following assumptions:</p>
- * <ul>
- * 	<li>Most organizations have "parent" organization(s) within a
+ * 	Most organizations have "parent" organization(s) within a
  * 	given context. For example, the School of Arts and Sciences
  * 	exists within the institution, so the School or Arts and
  * 	Sciences is a child of the institution.</li>
@@ -72,14 +68,9 @@ import java.util.List;
  * 	into hierarchies based upon the type of relationship.</li>
  * 	<li>Organizations may place additional constraints on the
  * 	types of relationships a person may have with the
- * 	organization.</li>
- * </ul>
+ * 	organization
  * 
- * 
- * <h3><a name="KSDOC-ServiceDescriptions-KeyConcepts"></a>Key Concepts</h3>
- * 
- * <ul>
- * 	<li>Organizations are different from authorization groups in
+ * Organizations are different from authorization groups in
  * 	that organizations deal directly with people while
  * 	authorization groups deal directly with
  * 	principals. Organizations may contain individuals who have no
@@ -91,7 +82,8 @@ import java.util.List;
  * 	that a member of an organization may have a principal
  * 	associated with an authorization group, but this is not
  * 	required.
- * </ul>
+ * 
+ * @version 2.0
  *
  * @author Kuali Student Team
  */
@@ -174,6 +166,35 @@ public interface OrganizationService extends SearchService {
      * @throws PermissionDeniedException an authorization failure occurred
      */
     public List<OrgHierarchyInfo> getOrgHierarchies(@WebParam(name = "contextInfo") ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException;
+  /**
+     * Searches for Org Hierarchy Ids that meet the given search criteria.
+     * 
+     * @param criteria the search criteria
+     * @param contextInfo information containing the principalId and
+     *        locale information about the caller of service operation
+     * @return list of Org identifiers matching the criteria
+     * @throws InvalidParameterException criteria or contextInfo is not valid
+     * @throws MissingParameterException criteria or contextInfo is
+     *         missing or null
+     * @throws OperationFailedException unable to complete request
+     * @throws PermissionDeniedException an authorization failure occurred
+     */
+    public List<String> searchForOrgHierarchyIds(@WebParam(name = "criteria") QueryByCriteria criteria, @WebParam(name = "contextInfo") ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException;
+
+    /**
+     * Searches for Org Hierarchies that meet the given search criteria.
+     * 
+     * @param criteria the search criteria
+     * @param contextInfo information containing the principalId and
+     *        locale information about the caller of service operation
+     * @return list of Orgs matching the criteria
+     * @throws InvalidParameterException criteria or contextInfo is not valid
+     * @throws MissingParameterException criteria or contextInfo is
+     *         missing or null
+     * @throws OperationFailedException unable to complete request
+     * @throws PermissionDeniedException an authorization failure occurred
+     */
+    public List<OrgHierarchyInfo> searchForOrgHierarchies(@WebParam(name = "criteria") QueryByCriteria criteria, @WebParam(name = "contextInfo") ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException;
 
     /** 
      * Retrieves the list of types of organizations known by this service.

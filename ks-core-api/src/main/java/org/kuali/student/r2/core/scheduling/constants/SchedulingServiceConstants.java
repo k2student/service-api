@@ -76,8 +76,8 @@ public class SchedulingServiceConstants {
     public static final String SCHEDULE_REQUEST_STATE_CREATED = "kuali.scheduling.schedule.request.state.created";
 
     // schedule transaction states
-    public static final String SCHEDULE_TRANSACTION_STATE_LIFECYCLE_KEY = "kuali.scheduling.scheduletransaction.lifecycle";
-    public static final String SCHEDULE_TRANSACTION_STATE_COMPLETED = "kuali.scheduling.scheduletransaction.state.completed";
+    public static final String SCHEDULE_TRANSACTION_STATE_LIFECYCLE_KEY = "kuali.scheduling.schedule.transaction.lifecycle";
+    public static final String SCHEDULE_TRANSACTION_STATE_COMPLETED = "kuali.scheduling.schedule.transaction.state.completed";
 
     // schedule batch states
     public static final String SCHEDULE_BATCH_STATE_LIFECYCLE_KEY = "kuali.scheduling.schedulebatch.lifecycle";
@@ -89,7 +89,7 @@ public class SchedulingServiceConstants {
 
     // time slot states
     public static final String TIME_SLOT_LIFECYCLE_KEY = "kuali.scheduling.timeslot.lifecycle";
-    public static final String TIME_SLOT_STATE_ACTIVE = " kuali.scheduling.timeslot.state.active ";
+    public static final String TIME_SLOT_STATE_ACTIVE = "kuali.scheduling.timeslot.state.active";
 
     ////////////////////////////////////////
     // TYPES / STATES not yet approved
@@ -104,12 +104,20 @@ public class SchedulingServiceConstants {
     public static final String TIME_SLOT_STATE_NON_STANDARD_KEY = "kuali.scheduling.time.slot.state.non.standard";
 
     public static final String MONDAY_TIMESLOT_DAY_CODE = "M";
-    public static final String TUESDAY_TIMESLOT_DAY_CODE = "Tu";
+    public static final String TUESDAY_TIMESLOT_DAY_CODE = "T";
     public static final String WEDNESDAY_TIMESLOT_DAY_CODE = "W";
-    public static final String THURSDAY_TIMESLOT_DAY_CODE = "Th";
+    public static final String THURSDAY_TIMESLOT_DAY_CODE = "H";
     public static final String FRIDAY_TIMESLOT_DAY_CODE = "F";
-    public static final String SATURDAY_TIMESLOT_DAY_CODE = "Sa";
-    public static final String SUNDAY_TIMESLOT_DAY_CODE = "Su";
+    public static final String SATURDAY_TIMESLOT_DAY_CODE = "S";
+    public static final String SUNDAY_TIMESLOT_DAY_CODE = "U";
+
+    public static final String MONDAY_TIMESLOT_DISPLAY_DAY_CODE = "M";
+    public static final String TUESDAY_TIMESLOT_DISPLAY_DAY_CODE = "Tu";
+    public static final String WEDNESDAY_TIMESLOT_DISPLAY_DAY_CODE = "W";
+    public static final String THURSDAY_TIMESLOT_DISPLAY_DAY_CODE = "Th";
+    public static final String FRIDAY_TIMESLOT_DISPLAY_DAY_CODE = "F";
+    public static final String SATURDAY_TIMESLOT_DISPLAY_DAY_CODE = "Sa";
+    public static final String SUNDAY_TIMESLOT_DISPLAY_DAY_CODE = "Su";
 
     public static List<Integer> TIME_SLOT_DAYS_OF_WEEK_ACTIVITY_OFFERING_TYPE;
 

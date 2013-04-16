@@ -16,13 +16,11 @@
 package org.kuali.student.r2.lum.lrc.dto;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAnyElement;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -31,7 +29,7 @@ import org.kuali.student.r2.lum.lrc.infc.ResultValueRange;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ResultValueRangeInfo", propOrder = {
-        "minValue", "maxValue", "increment" })//, "_futureElements" }) TODO KSCM-372: Non-GWT translatable code
+        "minValue", "maxValue", "increment" , "_futureElements" }) 
 
 public class ResultValueRangeInfo implements ResultValueRange, Serializable {
     private static final long serialVersionUID = 1L;
@@ -45,9 +43,8 @@ public class ResultValueRangeInfo implements ResultValueRange, Serializable {
     @XmlElement
     private String increment;
 
-//    TODO KSCM-372: Non-GWT translatable code
-//    @XmlAnyElement
-//    private List<Element> _futureElements;
+    @XmlAnyElement
+    private List<Object> _futureElements;  
 
     public ResultValueRangeInfo() {
         minValue = null;

@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2010 The Kuali Foundation 
  *
  * Licensed under the Educational Community License, Version 2.0 (the
@@ -18,7 +18,9 @@ import java.util.List;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
+import org.kuali.rice.core.api.criteria.QueryByCriteria;
 
+import org.kuali.student.r2.core.search.service.SearchService;
 import org.kuali.student.r2.common.dto.StatusInfo;
 import org.kuali.student.r2.common.exceptions.PermissionDeniedException;
 import org.kuali.student.r2.common.dto.ContextInfo;
@@ -45,11 +47,12 @@ import org.kuali.student.r2.lum.lrc.dto.ResultValueInfo;
  * Group, and Result Value Range.
  *
  * @Author sambit
+ * @version 2.0 
  * @Since Tue May 10 14:09:46 PDT 2011
  */
 @WebService(name = "LrcService", targetNamespace = LrcServiceConstants.NAMESPACE)
 @SOAPBinding(style = SOAPBinding.Style.DOCUMENT, use = SOAPBinding.Use.LITERAL, parameterStyle = SOAPBinding.ParameterStyle.WRAPPED)
-public interface LRCService extends LrcServiceBusinessLogic {
+public interface LRCService extends LrcServiceBusinessLogic, SearchService {
 
     /**
      * Retrieves existing result values group by an identifier.
@@ -867,4 +870,97 @@ public interface LRCService extends LrcServiceBusinessLogic {
             MissingParameterException,
             OperationFailedException,
             PermissionDeniedException;
+    
+     
+    /**
+     * Searches for result scale ids using a free form search criteria.
+     *
+     * @param criteria
+     * @param context
+     * @return
+     * @throws InvalidParameterException
+     * @throws MissingParameterException
+     * @throws OperationFailedException
+     * @throws PermissionDeniedException
+     */
+    public List<String> searchForResultScaleIds(@WebParam(name = "criteria") QueryByCriteria criteria,
+            @WebParam(name = "context") ContextInfo context) throws InvalidParameterException, MissingParameterException,
+            OperationFailedException, PermissionDeniedException;
+
+    /**
+     * Searches for result scales using a free form search criteria
+     *
+     * @param criteria
+     * @param context
+     * @throws InvalidParameterException
+     * @throws MissingParameterException
+     * @throws OperationFailedException
+     * @throws PermissionDeniedException
+     */
+    public List<ResultScaleInfo> searchForResultScales(@WebParam(name = "criteria") QueryByCriteria criteria,
+            @WebParam(name = "context") ContextInfo context)  throws InvalidParameterException, MissingParameterException,
+            OperationFailedException,PermissionDeniedException;
+    
+    
+     
+    /**
+     * Searches for result value ids using a free form search criteria.
+     *
+     * @param criteria
+     * @param context
+     * @return
+     * @throws InvalidParameterException
+     * @throws MissingParameterException
+     * @throws OperationFailedException
+     * @throws PermissionDeniedException
+     */
+    public List<String> searchForResultValueIds(@WebParam(name = "criteria") QueryByCriteria criteria,
+            @WebParam(name = "context") ContextInfo context) throws InvalidParameterException, MissingParameterException,
+            OperationFailedException, PermissionDeniedException;
+
+    /**
+     * Searches for result values using a free form search criteria
+     *
+     * @param criteria
+     * @param context
+     * @throws InvalidParameterException
+     * @throws MissingParameterException
+     * @throws OperationFailedException
+     * @throws PermissionDeniedException
+     */
+    public List<ResultValueInfo> searchForResultValues(@WebParam(name = "criteria") QueryByCriteria criteria,
+            @WebParam(name = "context") ContextInfo context)  throws InvalidParameterException, MissingParameterException,
+            OperationFailedException,PermissionDeniedException;
+    
+    
+     
+    /**
+     * Searches for result value group ids using a free form search criteria.
+     *
+     * @param criteria
+     * @param context
+     * @return
+     * @throws InvalidParameterException
+     * @throws MissingParameterException
+     * @throws OperationFailedException
+     * @throws PermissionDeniedException
+     */
+    public List<String> searchForResultValuesGroupIds(@WebParam(name = "criteria") QueryByCriteria criteria,
+            @WebParam(name = "context") ContextInfo context) throws InvalidParameterException, MissingParameterException,
+            OperationFailedException, PermissionDeniedException;
+
+    /**
+     * Searches for result value groups using a free form search criteria
+     *
+     * @param criteria
+     * @param context
+     * @throws InvalidParameterException
+     * @throws MissingParameterException
+     * @throws OperationFailedException
+     * @throws PermissionDeniedException
+     */
+    public List<ResultValuesGroupInfo> searchForResultValuesGroups(@WebParam(name = "criteria") QueryByCriteria criteria,
+            @WebParam(name = "context") ContextInfo context)  throws InvalidParameterException, MissingParameterException,
+            OperationFailedException,PermissionDeniedException;
+    
 }

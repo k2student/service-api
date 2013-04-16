@@ -16,14 +16,13 @@ import java.util.List;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
-import javax.xml.bind.annotation.XmlSeeAlso;
+import org.kuali.rice.core.api.criteria.QueryByCriteria;
 
-import org.kuali.student.r1.common.search.service.SearchService;
+import org.kuali.student.r2.core.search.service.SearchService;
 import org.kuali.student.r1.common.dictionary.service.DictionaryService;
 import org.kuali.student.r2.common.dto.ContextInfo;
 import org.kuali.student.r2.common.dto.StatusInfo;
 import org.kuali.student.r2.common.dto.ValidationResultInfo;
-import org.kuali.student.r2.common.exceptions.AlreadyExistsException;
 import org.kuali.student.r2.common.exceptions.DataValidationErrorException;
 import org.kuali.student.r2.common.exceptions.DependentObjectsExistException;
 import org.kuali.student.r2.common.exceptions.DoesNotExistException;
@@ -36,14 +35,23 @@ import org.kuali.student.r2.common.exceptions.VersionMismatchException;
 import org.kuali.student.r2.core.proposal.dto.ProposalInfo;
 
 /**
- * This is a description of what this class does - sambit don't forget to fill
- * this in.
+ * The Proposal Service supports the management of Proposals. The proposal is 
+ * general and can be associated with any arbitrary entity in the system, for 
+ * example, a learning unit. Proposals have types that capture the activity being 
+ * proposed, for example, Creating a new course or Updating the prefix for a set 
+ * of courses or Launching a new student club.
  * 
+ * A proposal may reference more than one (1) object, provided that the objects 
+ * are all of the same reference type and that the other data contained in the 
+ * proposal applies to all of the objects referenced. An object (e.g. CLU) is 
+ * involved in only one active proposal at a time.
+ * 
+ * @version 2.0
  * @author Sambit (sambitpa@kuali.org)
  */
 @WebService(name = "ProposalService", targetNamespace = "http://student.kuali.org/wsdl/proposal")
 @SOAPBinding(style = SOAPBinding.Style.DOCUMENT, use = SOAPBinding.Use.LITERAL, parameterStyle = SOAPBinding.ParameterStyle.WRAPPED)
-@XmlSeeAlso({org.kuali.student.r1.common.dto.ReferenceTypeInfo.class})
+//@XmlSeeAlso({org.kuali.student.r1.common.dto.ReferenceTypeInfo.class})
 public interface ProposalService extends DictionaryService, SearchService {
 
     /**
@@ -79,13 +87,12 @@ public interface ProposalService extends DictionaryService, SearchService {
      * 
      * @param proposalTypeKey key of the proposal type
      * @return List of proposal information
-     * @throws DoesNotExistException proposalTypeKey not found
      * @throws InvalidParameterException invalid proposalTypeKey
      * @throws MissingParameterException missing proposalTypeKey
      * @throws OperationFailedException unable to complete request
      */
     public List<ProposalInfo> getProposalsByProposalType(@WebParam(name = "proposalTypeKey") String proposalTypeKey, @WebParam(name = "contextInfo") ContextInfo contextInfo)
-            throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException;
+            throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException;
 
     /**
      * Retrieves the list of Proposals for the specified Reference Type and
@@ -163,7 +170,6 @@ public interface ProposalService extends DictionaryService, SearchService {
      *            being created
      * @param proposalInfo information about the Proposal being created
      * @return the created Proposal information
-     * @throws AlreadyExistsException Proposal already exists
      * @throws DataValidationErrorException One or more values invalid for this
      *             operation
      * @throws DoesNotExistException proposalTypeKey not found
@@ -173,7 +179,7 @@ public interface ProposalService extends DictionaryService, SearchService {
      * @throws PermissionDeniedException authorization failure
      */
     public ProposalInfo createProposal(@WebParam(name = "proposalTypeKey") String proposalTypeKey, @WebParam(name = "proposalInfo") ProposalInfo proposalInfo,
-            @WebParam(name = "contextInfo") ContextInfo contextInfo) throws AlreadyExistsException, DataValidationErrorException, DoesNotExistException, InvalidParameterException,
+            @WebParam(name = "contextInfo") ContextInfo contextInfo) throws DataValidationErrorException, DoesNotExistException, InvalidParameterException,
             MissingParameterException, OperationFailedException, PermissionDeniedException, ReadOnlyException;
 
     /**
@@ -189,12 +195,21 @@ public interface ProposalService extends DictionaryService, SearchService {
      * @throws MissingParameterException missing proposalId, proposalInfo
      * @throws OperationFailedException unable to complete request
      * @throws PermissionDeniedException authorization failure
+     * @throws ReadOnlyException if attempting to update a read-only field like the type
      * @throws VersionMismatchException The action was attempted on an out of
      *             date version.
      */
-    public ProposalInfo updateProposal(@WebParam(name = "proposalId") String proposalId, @WebParam(name = "proposalInfo") ProposalInfo proposalInfo,
-            @WebParam(name = "contextInfo") ContextInfo contextInfo) throws DataValidationErrorException, DoesNotExistException, InvalidParameterException, MissingParameterException,
-            OperationFailedException, PermissionDeniedException, VersionMismatchException;
+    public ProposalInfo updateProposal(@WebParam(name = "proposalId") String proposalId, 
+            @WebParam(name = "proposalInfo") ProposalInfo proposalInfo,
+            @WebParam(name = "contextInfo") ContextInfo contextInfo) 
+            throws DataValidationErrorException, 
+            DoesNotExistException, 
+            InvalidParameterException, 
+            MissingParameterException,
+            OperationFailedException, 
+            PermissionDeniedException, 
+            ReadOnlyException,
+            VersionMismatchException;
 
     /**
      * Deletes an existing Proposal
@@ -211,5 +226,35 @@ public interface ProposalService extends DictionaryService, SearchService {
      */
     public StatusInfo deleteProposal(@WebParam(name = "proposalId") String proposalId, @WebParam(name = "contextInfo") ContextInfo contextInfo) throws DoesNotExistException,
             InvalidParameterException, MissingParameterException, DependentObjectsExistException, OperationFailedException, PermissionDeniedException;
+
+    /**
+     * Searches for proposal Ids that meet the given search criteria.
+     * 
+     * @param criteria the search criteria
+     * @param contextInfo information containing the principalId and
+     *        locale information about the caller of service operation
+     * @return list of proposal identifiers matching the criteria
+     * @throws InvalidParameterException criteria or contextInfo is not valid
+     * @throws MissingParameterException criteria or contextInfo is
+     *         missing or null
+     * @throws OperationFailedException unable to complete request
+     * @throws PermissionDeniedException an authorization failure occurred
+     */
+    public List<String> searchForProposalIds(@WebParam(name = "criteria") QueryByCriteria criteria, @WebParam(name = "contextInfo") ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException;
+
+    /**
+     * Searches for proposals that meet the given search criteria.
+     * 
+     * @param criteria the search criteria
+     * @param contextInfo information containing the principalId and
+     *        locale information about the caller of service operation
+     * @return list of proposal identifiers matching the criteria
+     * @throws InvalidParameterException criteria or contextInfo is not valid
+     * @throws MissingParameterException criteria or contextInfo is
+     *         missing or null
+     * @throws OperationFailedException unable to complete request
+     * @throws PermissionDeniedException an authorization failure occurred
+     */
+    public List<ProposalInfo> searchForProposals(@WebParam(name = "criteria") QueryByCriteria criteria, @WebParam(name = "contextInfo") ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException;
 
 }

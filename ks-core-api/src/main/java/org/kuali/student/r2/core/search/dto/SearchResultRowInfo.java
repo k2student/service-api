@@ -26,13 +26,13 @@ import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-import org.kuali.student.r2.core.search.infc.SearchResultRow;
 import org.kuali.student.r2.core.search.infc.SearchResultCell;
+import org.kuali.student.r2.core.search.infc.SearchResultRow;
 //import org.w3c.dom.Element;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SearchResultRowInfo", propOrder = {
-                "cells"})//, "_futureElements" }) TODO KSCM-372: Non-GWT translatable code
+                "cells", "_futureElements" }) 
 
 public class SearchResultRowInfo 
     implements SearchResultRow, Serializable {
@@ -42,9 +42,8 @@ public class SearchResultRowInfo
     @XmlElement
     private List<SearchResultCellInfo> cells;
 
-//    TODO KSCM-372: Non-GWT translatable code
-//    @XmlAnyElement
-//    private List<Element> _futureElements;
+    @XmlAnyElement
+    private List<Object> _futureElements;  
 
     
     /**
@@ -68,8 +67,10 @@ public class SearchResultRowInfo
         }
     }
     
-    public void addCell(String key, String value) {
-        getCells().add(new SearchResultCellInfo(key, value));
+    public SearchResultCellInfo addCell(String key, String value) {
+        SearchResultCellInfo cellInfo = new SearchResultCellInfo(key, value);
+        getCells().add(cellInfo);
+        return cellInfo;
     }
     
     @Override

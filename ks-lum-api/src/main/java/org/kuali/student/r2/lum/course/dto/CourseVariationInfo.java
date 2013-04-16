@@ -16,7 +16,6 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAnyElement;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -24,7 +23,7 @@ import org.kuali.student.r2.common.dto.IdNamelessEntityInfo;
 import org.kuali.student.r2.lum.course.infc.CourseVariation;
 //import org.w3c.dom.Element;
 
-@XmlType(name = "CourseVariationInfo", propOrder = {"id", "typeKey", "stateKey", "variationTitle", "subjectArea", "courseNumberSuffix", "variationCode", "meta", "attributes" })//, "_futureElements" }) TODO KSCM-372: Non-GWT translatable code})
+@XmlType(name = "CourseVariationInfo", propOrder = {"id", "typeKey", "stateKey", "variationTitle", "subjectArea", "courseNumberSuffix", "variationCode", "meta", "attributes" , "_futureElements" }) 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class CourseVariationInfo extends IdNamelessEntityInfo implements CourseVariation, Serializable {
 
@@ -41,10 +40,9 @@ public class CourseVariationInfo extends IdNamelessEntityInfo implements CourseV
 
     @XmlElement
     private String variationCode;
-
-//    TODO KSCM-372: Non-GWT translatable code
-//    @XmlAnyElement
-//    private List<Element> _futureElements;
+    
+    @XmlAnyElement
+    private List<Object> _futureElements;  
 
     public CourseVariationInfo() {
 

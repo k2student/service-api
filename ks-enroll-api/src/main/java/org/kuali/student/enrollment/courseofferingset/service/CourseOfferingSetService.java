@@ -16,30 +16,19 @@
 package org.kuali.student.enrollment.courseofferingset.service;
 
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
-import org.kuali.student.enrollment.courseoffering.dto.SeatPoolDefinitionInfo;
+import org.kuali.student.enrollment.courseofferingset.dto.SocInfo;
+import org.kuali.student.enrollment.courseofferingset.dto.SocRolloverResultInfo;
+import org.kuali.student.enrollment.courseofferingset.dto.SocRolloverResultItemInfo;
 import org.kuali.student.r2.common.dto.ContextInfo;
 import org.kuali.student.r2.common.dto.StatusInfo;
 import org.kuali.student.r2.common.dto.ValidationResultInfo;
-
-import org.kuali.student.r2.common.exceptions.DataValidationErrorException;
-import org.kuali.student.r2.common.exceptions.DoesNotExistException;
-import org.kuali.student.r2.common.exceptions.InvalidParameterException;
-import org.kuali.student.r2.common.exceptions.MissingParameterException;
-import org.kuali.student.r2.common.exceptions.OperationFailedException;
-import org.kuali.student.r2.common.exceptions.PermissionDeniedException;
-import org.kuali.student.r2.common.exceptions.ReadOnlyException;
-import org.kuali.student.r2.common.exceptions.VersionMismatchException;
-
+import org.kuali.student.r2.common.exceptions.*;
+import org.kuali.student.r2.common.util.constants.CourseOfferingSetServiceConstants;
 
 import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import java.util.List;
-import org.kuali.student.enrollment.courseofferingset.dto.SocInfo;
-import org.kuali.student.enrollment.courseofferingset.dto.SocRolloverResultItemInfo;
-import org.kuali.student.enrollment.courseofferingset.dto.SocRolloverResultInfo;
-import org.kuali.student.r2.common.exceptions.DependentObjectsExistException;
-import org.kuali.student.r2.common.util.constants.CourseOfferingSetServiceConstants;
 
 /**
  * Course Offering Set Service allows the user to create Sets of 
@@ -48,7 +37,7 @@ import org.kuali.student.r2.common.util.constants.CourseOfferingSetServiceConsta
  * By default there is one main Soc per term that includes all the courses 
  * in that term.
  * 
- * @version 1.0
+ * @version 0.0.7
  *
  * @author nwright
  */
@@ -183,7 +172,8 @@ public interface CourseOfferingSetService extends CourseOfferingSetServiceBusine
             OperationFailedException, PermissionDeniedException;
 
     /**
-     *
+     * Search for Sets of Courses
+     * 
      * @param criteria What to search for in SocInfo table
      * @param context Context information containing the principalId and locale
      *                    information about the caller of service operation
@@ -198,7 +188,8 @@ public interface CourseOfferingSetService extends CourseOfferingSetServiceBusine
             throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException;
 
     /**
-     *
+     * Search for Set of Course Ids
+     * 
      * @param criteria What to search for in SocInfo table
      * @param context Context information containing the principalId and locale
      *                    information about the caller of service operation
@@ -260,9 +251,9 @@ public interface CourseOfferingSetService extends CourseOfferingSetServiceBusine
             ReadOnlyException, VersionMismatchException;
 
     /**
-     * Updates the state of an existing Set of CourseOfferings to another state provided that it is valid to do so. 
+     * Changes the state of an existing Set of CourseOfferings to another state provided that it is valid to do so.
      * 
-     * @param socId of the Set of CourseOffering's to be updated.
+     * @param socId of the Set of CourseOffering's to be changed.
      * @param nextStateKey The State Key into which the identified Set of CourseOffering's will be placed if the operation succeeds.
      * @param contextInfo Context information containing the principalId
      *                           and locale information about the caller of
@@ -274,7 +265,7 @@ public interface CourseOfferingSetService extends CourseOfferingSetServiceBusine
      * @throws OperationFailedException unable to complete request
      * @throws PermissionDeniedException authorization failure
      */
-    public StatusInfo updateSocState (@WebParam(name = "socId") String socId, @WebParam (name = "nextStateKey")  String nextStateKey,@WebParam (name = "contextInfo")  ContextInfo contextInfo) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException;
+    public StatusInfo changeSocState(@WebParam(name = "socId") String socId, @WebParam(name = "nextStateKey") String nextStateKey, @WebParam(name = "contextInfo") ContextInfo contextInfo) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException;
     
     /**
      * Deletes an existing Soc.
@@ -541,6 +532,7 @@ public interface CourseOfferingSetService extends CourseOfferingSetServiceBusine
      * @throws OperationFailedException  unable to complete request
      * @throws PermissionDeniedException authorization failure
      */
+    @Override
     public StatusInfo startScheduleSoc(@WebParam(name = "socId") String socId, @WebParam (name="optionKeys")
             List<String> optionKeys, @WebParam(name = "context") ContextInfo context)
             throws DoesNotExistException, InvalidParameterException, MissingParameterException,
@@ -828,9 +820,9 @@ public interface CourseOfferingSetService extends CourseOfferingSetServiceBusine
             ReadOnlyException, VersionMismatchException;
 
     /**
-     * Updates the state of an existing SocRolloverResultState to another state provided that it is valid to do so. 
+     * Changes the state of an existing SocRolloverResultState to another state provided that it is valid to do so.
      * 
-     * @param socRolloverResultStateId of the SocRolloverResultState to be updated.
+     * @param socRolloverResultStateId of the SocRolloverResultState to be changed.
      * @param nextStateKey The State Key into which the identified SocRolloverResultState will be placed if the operation succeeds.
      * @param contextInfo Context information containing the principalId
      *                           and locale information about the caller of
@@ -842,7 +834,7 @@ public interface CourseOfferingSetService extends CourseOfferingSetServiceBusine
      * @throws OperationFailedException unable to complete request
      * @throws PermissionDeniedException authorization failure
      */
-    public StatusInfo updateSocRolloverResultState (@WebParam(name = "socRolloverResultStateId") String socRolloverResultStateId, @WebParam (name = "nextStateKey")  String nextStateKey,@WebParam (name = "contextInfo")  ContextInfo contextInfo) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException;
+    public StatusInfo changeSocRolloverResultState(@WebParam(name = "socRolloverResultStateId") String socRolloverResultStateId, @WebParam(name = "nextStateKey") String nextStateKey, @WebParam(name = "contextInfo") ContextInfo contextInfo) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException;
     
     /**
      * Deletes an existing SocRolloverResult. 
@@ -981,9 +973,9 @@ public interface CourseOfferingSetService extends CourseOfferingSetServiceBusine
             ReadOnlyException, VersionMismatchException;
 
     /**
-     * Updates the state of an existing SocRolloverResultItem to another state provided that it is valid to do so. 
+     * Changes the state of an existing SocRolloverResultItem to another state provided that it is valid to do so.
      * 
-     * @param socRolloverResultItemId of the SocRolloverResultItem to be updated.
+     * @param socRolloverResultItemId of the SocRolloverResultItem to be changed.
      * @param nextStateKey The State Key into which the identified SocRolloverResultItem will be placed if the operation succeeds.
      * @param contextInfo Context information containing the principalId
      *                           and locale information about the caller of
@@ -995,7 +987,7 @@ public interface CourseOfferingSetService extends CourseOfferingSetServiceBusine
      * @throws OperationFailedException unable to complete request
      * @throws PermissionDeniedException authorization failure
      */
-    public StatusInfo updateSocRolloverResultItemState (@WebParam(name = "socRolloverResultItemId") String socRolloverResultItemId, @WebParam (name = "nextStateKey")  String nextStateKey,@WebParam (name = "contextInfo")  ContextInfo contextInfo) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException;
+    public StatusInfo changeSocRolloverResultItemState(@WebParam(name = "socRolloverResultItemId") String socRolloverResultItemId, @WebParam(name = "nextStateKey") String nextStateKey, @WebParam(name = "contextInfo") ContextInfo contextInfo) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException;
     
     /**
      * Deletes an existing SocRolloverResultItem. 
@@ -1071,6 +1063,36 @@ public interface CourseOfferingSetService extends CourseOfferingSetServiceBusine
      * @throws PermissionDeniedException
      */
     public List<SocRolloverResultInfo> searchForSocRolloverResults(@WebParam(name = "criteria") QueryByCriteria criteria,
+            @WebParam(name = "context") ContextInfo context)  throws InvalidParameterException, MissingParameterException,
+            OperationFailedException,PermissionDeniedException;
+    
+    
+    /**
+     * Searches for soc rollover result item ids using a free form search criteria.
+     *
+     * @param criteria
+     * @param context
+     * @return
+     * @throws InvalidParameterException
+     * @throws MissingParameterException
+     * @throws OperationFailedException
+     * @throws PermissionDeniedException
+     */
+    public List<String> searchForSocRolloverResultItemIds(@WebParam(name = "criteria") QueryByCriteria criteria,
+            @WebParam(name = "context") ContextInfo context) throws InvalidParameterException, MissingParameterException,
+            OperationFailedException, PermissionDeniedException;
+
+    /**
+     * Searches for soc rollover result items using a free form search criteria
+     *
+     * @param criteria
+     * @param context
+     * @throws InvalidParameterException
+     * @throws MissingParameterException
+     * @throws OperationFailedException
+     * @throws PermissionDeniedException
+     */
+    public List<SocRolloverResultItemInfo> searchForSocRolloverResultItems(@WebParam(name = "criteria") QueryByCriteria criteria,
             @WebParam(name = "context") ContextInfo context)  throws InvalidParameterException, MissingParameterException,
             OperationFailedException,PermissionDeniedException;
 

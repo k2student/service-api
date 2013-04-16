@@ -4,11 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.kuali.student.r1.common.dictionary.dto.ObjectStructureDefinition;
-import org.kuali.student.r1.common.search.dto.SearchCriteriaTypeInfo;
-import org.kuali.student.r1.common.search.dto.SearchRequest;
-import org.kuali.student.r1.common.search.dto.SearchResult;
-import org.kuali.student.r1.common.search.dto.SearchResultTypeInfo;
-import org.kuali.student.r1.common.search.dto.SearchTypeInfo;
 import org.kuali.student.r2.common.dto.ContextInfo;
 import org.kuali.student.r2.common.dto.StatusInfo;
 import org.kuali.student.r2.common.dto.ValidationResultInfo;
@@ -22,6 +17,9 @@ import org.kuali.student.r2.common.exceptions.OperationFailedException;
 import org.kuali.student.r2.common.exceptions.PermissionDeniedException;
 import org.kuali.student.r2.common.exceptions.ReadOnlyException;
 import org.kuali.student.r2.common.exceptions.VersionMismatchException;
+import org.kuali.student.r2.core.class1.type.dto.TypeInfo;
+import org.kuali.student.r2.core.search.dto.SearchRequestInfo;
+import org.kuali.student.r2.core.search.dto.SearchResultInfo;
 import org.kuali.student.r2.core.versionmanagement.dto.VersionDisplayInfo;
 import org.kuali.student.r2.lum.program.dto.CoreProgramInfo;
 import org.kuali.student.r2.lum.program.dto.CredentialProgramInfo;
@@ -281,64 +279,19 @@ public class ProgramServiceDecorator implements ProgramService {
     }
 
     @Override
-    @Deprecated
-    public List<SearchTypeInfo> getSearchTypes() throws OperationFailedException {
-        return this.getNextDecorator().getSearchTypes();
+    public List<TypeInfo> getSearchTypes(ContextInfo contextInfo) throws OperationFailedException, InvalidParameterException, MissingParameterException {
+        return this.getNextDecorator().getSearchTypes(contextInfo);
     }
 
     @Override
-    @Deprecated
-    public SearchTypeInfo getSearchType(String searchTypeKey) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException {
-        return this.getNextDecorator().getSearchType(searchTypeKey);
+    public TypeInfo getSearchType(String searchTypeKey, ContextInfo contextInfo) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException {
+        return this.getNextDecorator().getSearchType(searchTypeKey, contextInfo);
     }
 
     @Override
-    @Deprecated
-    public List<SearchTypeInfo> getSearchTypesByResult(String searchResultTypeKey) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException {
-        return this.getNextDecorator().getSearchTypesByResult(searchResultTypeKey);
-    }
-
-    @Override
-    @Deprecated
-    public List<SearchTypeInfo> getSearchTypesByCriteria(String searchCriteriaTypeKey) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException {
-        return this.getNextDecorator().getSearchTypesByCriteria(searchCriteriaTypeKey);
-    }
-
-    @Override
-    @Deprecated
-    public List<SearchResultTypeInfo> getSearchResultTypes() throws OperationFailedException {
-        return this.getNextDecorator().getSearchResultTypes();
-    }
-
-    @Override
-    @Deprecated
-    public SearchResultTypeInfo getSearchResultType(String searchResultTypeKey) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException {
-        return this.getNextDecorator().getSearchResultType(searchResultTypeKey);
-    }
-
-    @Override
-    @Deprecated
-    public List<SearchCriteriaTypeInfo> getSearchCriteriaTypes() throws OperationFailedException {
-        return this.getNextDecorator().getSearchCriteriaTypes();
-    }
-
-    @Override
-    @Deprecated
-    public SearchCriteriaTypeInfo getSearchCriteriaType(String searchCriteriaTypeKey) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException {
-        return this.getNextDecorator().getSearchCriteriaType(searchCriteriaTypeKey);
-    }
-
-    @Override
-    @Deprecated
-    public SearchResult search(SearchRequest searchRequest) throws MissingParameterException {
-
-        SearchResult sr = null;
-        try {
-            sr = this.getNextDecorator().search(searchRequest);
-        } catch (OperationFailedException e) {
-            e.printStackTrace();
-        }
-
+    public SearchResultInfo search(SearchRequestInfo searchRequestInfo, ContextInfo contextInfo) throws MissingParameterException, InvalidParameterException, OperationFailedException, PermissionDeniedException {
+       
+        SearchResultInfo sr = this.getNextDecorator().search(searchRequestInfo, contextInfo);
         return sr;
     }
 

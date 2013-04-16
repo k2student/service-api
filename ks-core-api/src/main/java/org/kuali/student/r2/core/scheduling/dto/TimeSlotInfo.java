@@ -36,7 +36,7 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "TimeSlotInfo", propOrder = {"id", "typeKey", "stateKey", "name", "descr",
         "weekdays", "startTime", "endTime",
-        "meta", "attributes"})//, "_futureElements" }) TODO KSCM-372: Non-GWT translatable code
+        "meta", "attributes", "_futureElements" }) 
 public class TimeSlotInfo extends IdEntityInfo implements TimeSlot, Serializable {
 
     @XmlElement
@@ -45,9 +45,8 @@ public class TimeSlotInfo extends IdEntityInfo implements TimeSlot, Serializable
     private TimeOfDayInfo startTime;
     @XmlElement
     private TimeOfDayInfo endTime;
-//    TODO KSCM-372: Non-GWT translatable code
-//    @XmlAnyElement
-//    private List<Element> _futureElements;
+    @XmlAnyElement
+    private List<Object> _futureElements;  
 
     public TimeSlotInfo() {
     }
@@ -106,6 +105,14 @@ public class TimeSlotInfo extends IdEntityInfo implements TimeSlot, Serializable
         if (!this.startTime.equals(ts.startTime)) { return false; }
         if (!this.endTime.equals(ts.endTime)) { return false; }
         return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = weekdays != null ? weekdays.hashCode() : 0;
+        result = 31 * result + (startTime != null ? startTime.hashCode() : 0);
+        result = 31 * result + (endTime != null ? endTime.hashCode() : 0);
+        return result;
     }
 
     @Override

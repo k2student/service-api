@@ -19,7 +19,7 @@ import javax.jws.soap.SOAPBinding;
 
 
 import org.kuali.student.r1.common.dictionary.service.DictionaryService;
-import org.kuali.student.r1.common.search.service.SearchService;
+import org.kuali.student.r2.core.search.service.SearchService;
 import org.kuali.student.r2.common.dto.ContextInfo;
 import org.kuali.student.r2.common.dto.StatusInfo;
 import org.kuali.student.r2.common.dto.ValidationResultInfo;
@@ -48,7 +48,7 @@ import org.kuali.student.r2.lum.program.dto.ProgramVariationInfo;
 /**
  * The Program Service allows for the creation and management of programs.
  * 
- * @Version 2.0
+ * @version 2.0
  * @Author sambitpa@usc.edu
  */
 @WebService(name = "ProgramService", targetNamespace = ProgramServiceConstants.PROGRAM_NAMESPACE)
@@ -78,7 +78,7 @@ public interface ProgramService extends  SearchService,  VersionManagementServic
      * Retrieves a list of CredentialPrograms corresponding to the given list of
      * CredentialProgram Ids
      * 
-     * @param CredentialProgram Ids list of CredentialPrograms to be retrieved
+     * @param credentialProgramIds list of CredentialPrograms to be retrieved
      * @param contextInfo Context information containing the principalId and
      *            locale information about the caller of service operation
      * @return list of CredentialProgram
@@ -226,7 +226,7 @@ public interface ProgramService extends  SearchService,  VersionManagementServic
      * Retrieves a list of MajorDiscipline corresponding to the given list of
      * major discipline Ids
      * 
-     * @param MajorDiscipline Ids list of MajorDisciplines to be retrieved
+     * @param majorDisciplineIds list of MajorDisciplines to be retrieved
      * @param contextInfo Context information containing the principalId and
      *            locale information about the caller of service operation
      * @return list of MajorDiscipline

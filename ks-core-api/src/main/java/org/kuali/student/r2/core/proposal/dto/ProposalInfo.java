@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2010 The Kuali Foundation Licensed under the Educational Community
  * License, Version 2.0 (the "License"); you may not use this file except in
  * compliance with the License. You may obtain a copy of the License at
@@ -42,7 +42,7 @@ import org.kuali.student.r2.core.proposal.infc.Proposal;
         "expirationDate",
         "workflowId",
         "meta", 
-        "attributes"})//, "_futureElements" }) TODO KSCM-372: Non-GWT translatable code})
+        "attributes", "_futureElements" }) 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ProposalInfo extends IdEntityInfo implements Proposal, Serializable {
 
@@ -72,9 +72,8 @@ public class ProposalInfo extends IdEntityInfo implements Proposal, Serializable
     @XmlElement
     private String workflowId;
 
-//    TODO KSCM-372: Non-GWT translatable code
-//    @XmlAnyElement
-//    private List<Element> _futureElements;
+    @XmlAnyElement
+    private List<Object> _futureElements;  
 
     public ProposalInfo() {
 

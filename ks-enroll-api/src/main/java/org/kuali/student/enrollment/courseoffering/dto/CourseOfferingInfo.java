@@ -16,40 +16,48 @@
 
 package org.kuali.student.enrollment.courseoffering.dto;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.kuali.student.enrollment.courseoffering.infc.CourseOffering;
+import org.kuali.student.enrollment.courseoffering.infc.CourseOfferingCrossListing;
+import org.kuali.student.enrollment.courseoffering.infc.OfferingInstructor;
+
+import org.kuali.student.r2.common.dto.IdNamelessEntityInfo;
+import org.kuali.student.r2.common.dto.RichTextInfo;
+import org.w3c.dom.Element;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.kuali.student.enrollment.courseoffering.infc.CourseOffering;
-import org.kuali.student.enrollment.courseoffering.infc.OfferingInstructor;
-import org.kuali.student.r2.common.dto.IdNamelessEntityInfo;
-import org.kuali.student.r2.common.dto.RichTextInfo;
-import org.w3c.dom.Element;
+import java.io.Serializable;
 
 /**
  * @author Kuali Student Team (Kamal)
  */
+
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "CourseOfferingInfo", propOrder = {
         "id", "typeKey", "stateKey", "descr", "courseId",
-        "termId", "courseCode", "courseOfferingCode", "courseNumberSuffix", "courseOfferingTitle",
-        "creditCnt", "isHonorsOffering", "instructors", "subjectArea", "unitsDeploymentOrgIds",
+        "termId", "courseCode", "courseOfferingCode", "courseNumberSuffix", 
+        "courseOfferingTitle", "creditCnt", "isHonorsOffering", 
+        "instructors", "subjectArea", "unitsDeploymentOrgIds",
         "unitsContentOwnerOrgIds",  "maximumEnrollment", 
-        "minimumEnrollment", "jointOfferingIds", "gradingOptionId", "gradingOptionName",
-        "studentRegistrationGradingOptions", "creditOptionName", "creditOptionId",
-        "waitlistLevelTypeKey", "waitlistMaximum", "hasWaitlist", "waitlistTypeKey","campusLocations", 
-        "isEvaluated", "fundingSource", "isFeeAtActivityOffering", "courseNumberInternalSuffix",
+        "minimumEnrollment",
+        "crossListings", "gradingOptionId", "gradingOptionName",
+        "studentRegistrationGradingOptions", "creditOptionName", 
+        "creditOptionId", "waitlistLevelTypeKey", "waitlistMaximum", 
+        "hasWaitlist", "waitlistTypeKey","campusLocations", 
+        "isEvaluated", "fundingSource", "isFeeAtActivityOffering", 
+        "courseNumberInternalSuffix",
         "isFinancialAidEligible", "courseOfferingURL", "finalExamType",
         "meta", "attributes", "_futureElements"})
 
 public class CourseOfferingInfo 
     extends IdNamelessEntityInfo 
-    implements CourseOffering {
+    implements CourseOffering, Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -76,6 +84,9 @@ public class CourseOfferingInfo
 
     @XmlElement
     private String subjectArea;
+
+    @XmlElement
+    private List<CourseOfferingCrossListingInfo> crossListings;
 
     @XmlElement
     private Boolean isHonorsOffering;
@@ -132,9 +143,6 @@ public class CourseOfferingInfo
     private String finalExamType;
 
     @XmlElement
-    private List<String> jointOfferingIds;
-
-    @XmlElement
     private String fundingSource;
 
     @XmlElement
@@ -187,6 +195,11 @@ public class CourseOfferingInfo
         this.courseNumberSuffix = offering.getCourseNumberSuffix();
         this.courseNumberInternalSuffix = offering.getCourseNumberInternalSuffix();
         this.subjectArea = offering.getSubjectArea();
+        this.crossListings = new ArrayList<CourseOfferingCrossListingInfo>();
+        for (CourseOfferingCrossListing crossListing : offering.getCrossListings()) {
+            this.crossListings.add(new CourseOfferingCrossListingInfo(crossListing));
+        }
+
         this.isHonorsOffering = offering.getIsHonorsOffering();
 
         this.instructors = new ArrayList<OfferingInstructorInfo>();
@@ -210,10 +223,6 @@ public class CourseOfferingInfo
         this.waitlistMaximum = offering.getWaitlistMaximum();
         this.maximumEnrollment = offering.getMaximumEnrollment();
         this.minimumEnrollment = offering.getMinimumEnrollment();
-
-        this.jointOfferingIds = (null != offering.getJointOfferingIds()) ? new ArrayList<String>(
-                offering.getJointOfferingIds()) : null;
-
 
         this.hasWaitlist = (null != offering.getHasWaitlist()) ? new Boolean(offering.getHasWaitlist()) : null;
 
@@ -314,6 +323,19 @@ public class CourseOfferingInfo
     }
 
     @Override
+    public List<CourseOfferingCrossListingInfo> getCrossListings() {
+        if (crossListings == null) {
+            crossListings = new ArrayList<CourseOfferingCrossListingInfo>();
+        }
+
+        return crossListings;
+    }
+
+    public void setCrossListings(List<CourseOfferingCrossListingInfo> crossListings) {
+        this.crossListings = crossListings;
+    }
+
+    @Override
     public Boolean getIsHonorsOffering() {
         return this.isHonorsOffering;
     }
@@ -356,11 +378,6 @@ public class CourseOfferingInfo
         this.unitsDeploymentOrgIds = unitsDeploymentOrgIds;
     }
 
-    @Deprecated
-    public void setUnitsDeployment(List<String> unitsDeployment) {
-        this.unitsDeploymentOrgIds = unitsDeployment;
-    }
-
     @Override
     public List<String> getUnitsContentOwnerOrgIds() {
         if (null == this.unitsContentOwnerOrgIds) {
@@ -372,11 +389,6 @@ public class CourseOfferingInfo
 
     public void setUnitsContentOwnerOrgIds(List<String> unitsContentOwnerOrgIds) {
         this.unitsContentOwnerOrgIds = unitsContentOwnerOrgIds;
-    }
-
-    @Deprecated
-    public void setUnitsContentOwner(List<String> unitsContentOwner) {
-        this.unitsContentOwnerOrgIds = unitsContentOwner;
     }
 
     @Override
@@ -471,19 +483,6 @@ public class CourseOfferingInfo
 
     public void setMinimumEnrollment(Integer minimumEnrollment) {
         this.minimumEnrollment = minimumEnrollment;
-    }
-
-    @Override
-    public List<String> getJointOfferingIds() {
-        if (null == this.jointOfferingIds) {
-            this.jointOfferingIds = new ArrayList<String>();
-        }
-
-        return this.jointOfferingIds;
-    }
-
-    public void setJointOfferingIds(List<String> jointOfferingIds) {
-        this.jointOfferingIds = jointOfferingIds;
     }
 
     @Override

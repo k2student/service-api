@@ -45,12 +45,14 @@ public class CourseOfferingSetServiceConstants {
     // SOC states (see https://wiki.kuali.org/display/STUDENT/Course+Offering+Set+Types+and+States)
     public static final String DRAFT_SOC_STATE_KEY = "kuali.soc.state.draft";
     public static final String OPEN_SOC_STATE_KEY = "kuali.soc.state.open";
-    public static final String LOCKED_SOC_STATE_KEY = "kuali.soc.state.locked ";
+    public static final String LOCKED_SOC_STATE_KEY = "kuali.soc.state.locked";
     public static final String FINALEDITS_SOC_STATE_KEY = "kuali.soc.state.finaledits";
     public static final String PUBLISHING_SOC_STATE_KEY = "kuali.soc.state.publishing";
     public static final String PUBLISHED_SOC_STATE_KEY = "kuali.soc.state.published";
-    public static final String CLOSED_SOC_STATE_KEY = "kuali.soc.state.closed ";
-    public static final String[] ALL_SOC_STATE_KEYS = {
+    public static final String CLOSED_SOC_STATE_KEY = "kuali.soc.state.closed";
+
+    public static final String SOC_LIFECYCLE_KEY = "kuali.soc.lifecycle";  // Not a state
+    public static final String[] SOC_LIFECYCLE_STATE_KEYS = {
             DRAFT_SOC_STATE_KEY,
             OPEN_SOC_STATE_KEY,
             LOCKED_SOC_STATE_KEY,

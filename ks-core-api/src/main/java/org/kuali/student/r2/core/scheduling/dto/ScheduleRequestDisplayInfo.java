@@ -16,18 +16,19 @@
  */
 package org.kuali.student.r2.core.scheduling.dto;
 
-import org.kuali.student.r2.common.dto.IdEntityInfo;
-import org.kuali.student.r2.core.atp.dto.AtpInfo;
-import org.kuali.student.r2.core.scheduling.infc.ScheduleDisplay;
-import org.kuali.student.r2.core.scheduling.infc.ScheduleRequestDisplay;
-
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAnyElement;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
+
+import org.kuali.student.r2.common.dto.IdEntityInfo;
+import org.kuali.student.r2.core.scheduling.infc.ScheduleRequestComponentDisplay;
+import org.kuali.student.r2.core.scheduling.infc.ScheduleRequestDisplay;
 
 /**
  * This class represents a reusable display object in the Scheduling Service for Schedule Requests.
@@ -38,7 +39,7 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ScheduleRequestDisplayInfo", propOrder = {"id", "typeKey", "stateKey", "name", "descr",
         "refObjectId", "refObjectTypeKey", "scheduleRequestComponentDisplays",
-        "meta", "attributes"})//, "_futureElements" }) TODO KSCM-372: Non-GWT translatable code
+        "meta", "attributes", "_futureElements" }) 
 public class ScheduleRequestDisplayInfo extends IdEntityInfo implements ScheduleRequestDisplay, Serializable {
 
     ////////////////////////
@@ -54,9 +55,8 @@ public class ScheduleRequestDisplayInfo extends IdEntityInfo implements Schedule
     @XmlElement
     private List<ScheduleRequestComponentDisplayInfo> scheduleRequestComponentDisplays;
 
-//    TODO KSCM-372: Non-GWT translatable code
-//    @XmlAnyElement
-//    private List<Element> _futureElements;
+    @XmlAnyElement
+    private List<Object> _futureElements;  
 
     ////////////////////////
     // CONSTRUCTORS
@@ -71,8 +71,8 @@ public class ScheduleRequestDisplayInfo extends IdEntityInfo implements Schedule
             this.refObjectId= scheduleRequestDisplay.getRefObjectId();
             this.refObjectTypeKey= scheduleRequestDisplay.getRefObjectTypeKey();
             this.scheduleRequestComponentDisplays= new ArrayList<ScheduleRequestComponentDisplayInfo>();
-            for (ScheduleRequestComponentDisplayInfo scheduleRequestComponentDisplayInfo: scheduleRequestDisplay.getScheduleRequestComponentDisplays()) {
-                this.scheduleRequestComponentDisplays.add(new ScheduleRequestComponentDisplayInfo(scheduleRequestComponentDisplayInfo));
+            for (ScheduleRequestComponentDisplay scheduleRequestComponentDisplay: scheduleRequestDisplay.getScheduleRequestComponentDisplays()) {
+                this.scheduleRequestComponentDisplays.add(new ScheduleRequestComponentDisplayInfo(scheduleRequestComponentDisplay));
             }
         }
     }
@@ -100,8 +100,12 @@ public class ScheduleRequestDisplayInfo extends IdEntityInfo implements Schedule
     }
 
     @Override
-    public List<ScheduleRequestComponentDisplayInfo> getScheduleRequestComponentDisplays() {
-        return scheduleRequestComponentDisplays;
+    public List<? extends ScheduleRequestComponentDisplay> getScheduleRequestComponentDisplays() {
+        if (this.scheduleRequestComponentDisplays==null) {
+            return new ArrayList<ScheduleRequestComponentDisplayInfo>();
+        } else {
+            return scheduleRequestComponentDisplays;
+        }
     }
 
     public void setScheduleRequestComponentDisplays(List<ScheduleRequestComponentDisplayInfo> scheduleRequestComponentDisplays) {

@@ -4,14 +4,15 @@
  */
 package org.kuali.student.r2.core.search.util;
 
+import org.kuali.student.r2.core.search.dto.SearchParamInfo;
+import org.kuali.student.r2.core.search.dto.SearchRequestInfo;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import org.kuali.student.r2.core.search.dto.SearchParamInfo;
-import org.kuali.student.r2.core.search.dto.SearchRequestInfo;
 
 /**
  * Help convert to and from Search objects

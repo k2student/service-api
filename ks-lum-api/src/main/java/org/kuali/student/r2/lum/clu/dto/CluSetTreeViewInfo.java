@@ -19,7 +19,6 @@ import org.kuali.student.r2.common.dto.IdEntityInfo;
 import org.kuali.student.r2.lum.clu.infc.Clu;
 import org.kuali.student.r2.lum.clu.infc.CluSetTreeView;
 
-import javax.xml.bind.Element;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAnyElement;
@@ -32,7 +31,7 @@ import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "CluSetTreeViewInfo", propOrder = {"id", "descr", "stateKey", "typeKey", "name", "adminOrg", "isReusable", "isReferenceable", "cluSets", "clus",
-        "effectiveDate", "expirationDate", "meta", "attributes" })//, "_futureElements" }) TODO KSCM-372: Non-GWT translatable code})
+        "effectiveDate", "expirationDate", "meta", "attributes" , "_futureElements" }) 
 public class CluSetTreeViewInfo extends IdEntityInfo implements CluSetTreeView, Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -58,9 +57,8 @@ public class CluSetTreeViewInfo extends IdEntityInfo implements CluSetTreeView, 
     @XmlElement
     private Date expirationDate;
 
-//    TODO KSCM-372: Non-GWT translatable code
-//    @XmlAnyElement
-//    private List<Element> _futureElements;
+    @XmlAnyElement
+    private List<Object> _futureElements;  
 
     public CluSetTreeViewInfo() {
 

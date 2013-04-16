@@ -16,17 +16,22 @@
  */
 package org.kuali.student.r2.core.scheduling.dto;
 
-import org.kuali.student.r2.core.room.dto.BuildingInfo;
-import org.kuali.student.r2.core.room.dto.RoomInfo;
-import org.kuali.student.r2.core.scheduling.infc.ScheduleComponentDisplay;
-
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAnyElement;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
+
+import org.kuali.student.r2.core.room.dto.BuildingInfo;
+import org.kuali.student.r2.core.room.dto.RoomInfo;
+import org.kuali.student.r2.core.room.infc.Building;
+import org.kuali.student.r2.core.room.infc.Room;
+import org.kuali.student.r2.core.scheduling.infc.ScheduleComponentDisplay;
+import org.kuali.student.r2.core.scheduling.infc.TimeSlot;
 
 /**
  * This class represents a reusable display object in the Scheduling Service for Schedule Component.
@@ -37,7 +42,7 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ScheduleComponentDisplayInfo", propOrder = {"id",
         "room", "building", "timeSlots"
-        })//, "_futureElements" }) TODO KSCM-372: Non-GWT translatable code
+        , "_futureElements" }) 
 public class ScheduleComponentDisplayInfo implements ScheduleComponentDisplay, Serializable {
 
     ////////////////////////
@@ -56,9 +61,8 @@ public class ScheduleComponentDisplayInfo implements ScheduleComponentDisplay, S
     @XmlElement
     private List<TimeSlotInfo> timeSlots;
 
-//    TODO KSCM-372: Non-GWT translatable code
-//    @XmlAnyElement
-//    private List<Element> _futureElements;
+    @XmlAnyElement
+    private List<Object> _futureElements;  
 
     ////////////////////////
     // CONSTRUCTORS
@@ -69,11 +73,11 @@ public class ScheduleComponentDisplayInfo implements ScheduleComponentDisplay, S
 
     public ScheduleComponentDisplayInfo(ScheduleComponentDisplay scheduleComponentDisplay) {
         if (null != scheduleComponentDisplay) {
-            this.room= scheduleComponentDisplay.getRoom();
-            this.building = scheduleComponentDisplay.getBuilding();
+            this.room= new RoomInfo(scheduleComponentDisplay.getRoom());
+            this.building = new BuildingInfo(scheduleComponentDisplay.getBuilding());
             this.timeSlots = new ArrayList<TimeSlotInfo>();
-            for (TimeSlotInfo timeSlotInfo: scheduleComponentDisplay.getTimeSlots()) {
-                this.timeSlots.add(new TimeSlotInfo(timeSlotInfo));
+            for (TimeSlot timeSlot: scheduleComponentDisplay.getTimeSlots()) {
+                this.timeSlots.add(new TimeSlotInfo(timeSlot));
             }
         }
     }
@@ -92,7 +96,7 @@ public class ScheduleComponentDisplayInfo implements ScheduleComponentDisplay, S
     }
 
     @Override
-    public RoomInfo getRoom() {
+    public Room getRoom() {
         return room;
     }
 
@@ -101,7 +105,7 @@ public class ScheduleComponentDisplayInfo implements ScheduleComponentDisplay, S
     }
 
     @Override
-    public BuildingInfo getBuilding() {
+    public Building getBuilding() {
         return building;
     }
 
@@ -110,8 +114,12 @@ public class ScheduleComponentDisplayInfo implements ScheduleComponentDisplay, S
     }
 
     @Override
-    public List<TimeSlotInfo> getTimeSlots() {
-        return timeSlots;
+    public List<? extends TimeSlot> getTimeSlots() {
+        if (this.timeSlots==null) {
+            return new ArrayList<TimeSlotInfo>();
+        } else {
+            return timeSlots;
+        }
     }
 
     public void setTimeSlots(List<TimeSlotInfo> timeSlots) {

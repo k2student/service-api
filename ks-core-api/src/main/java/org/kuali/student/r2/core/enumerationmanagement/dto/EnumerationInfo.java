@@ -17,7 +17,6 @@ package org.kuali.student.r2.core.enumerationmanagement.dto;
 import org.kuali.student.r2.common.dto.KeyEntityInfo;
 import org.kuali.student.r2.core.enumerationmanagement.infc.Enumeration;
 
-import javax.xml.bind.Element;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAnyElement;
@@ -34,7 +33,7 @@ import java.util.List;
     "contextDescriptors", 
     "effectiveDate", 
     "expirationDate", 
-    "meta", "attributes"})//, "_futureElements" }) TODO KSCM-372: Non-GWT translatable code})
+    "meta", "attributes", "_futureElements" }) 
 public class EnumerationInfo extends KeyEntityInfo implements Enumeration, Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,9 +43,8 @@ public class EnumerationInfo extends KeyEntityInfo implements Enumeration, Seria
     private Date effectiveDate;
     @XmlElement
     private Date expirationDate;
-//    TODO KSCM-372: Non-GWT translatable code
-//    @XmlAnyElement
-//    private List<Element> _futureElements;
+    @XmlAnyElement
+    private List<Object> _futureElements;  
 
     public EnumerationInfo() {
     }

@@ -18,13 +18,14 @@ package org.kuali.student.r2.core.class1.state.dto;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-
 
 import org.kuali.student.r2.common.dto.HasAttributesAndMetaInfo;
 import org.kuali.student.r2.common.dto.RichTextInfo;
@@ -33,9 +34,9 @@ import org.kuali.student.r2.core.class1.state.infc.State;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "StateInfo", propOrder = {
-                "key", "name", "descr", "lifecycleKey",
+                "key", "name", "descr", "lifecycleKey", "isInitialState",
                 "effectiveDate", "expirationDate", 
-                "meta", "attributes" })//, "_futureElements" }) TODO KSCM-372 Non-GWT translatable code})
+                "meta", "attributes" , "_futureElements" }) 
 
 public class StateInfo 
     extends HasAttributesAndMetaInfo 
@@ -56,14 +57,16 @@ public class StateInfo
     private String lifecycleKey;
 
     @XmlElement
+    private Boolean isInitialState;
+
+    @XmlElement
     private Date effectiveDate;
 
     @XmlElement
     private Date expirationDate;
 
-//    TODO KSCM-372: Non-GWT translatable code
-//    @XmlAnyElement
-//    private List<Element> _futureElements;
+    @XmlAnyElement
+    private List<Object> _futureElements;  
 
 
     /**
@@ -87,6 +90,7 @@ public class StateInfo
             }
 
             this.lifecycleKey = state.getLifecycleKey();
+            this.isInitialState = state.getIsInitialState();
             this.effectiveDate = null != state.getEffectiveDate() ? new Date(state.getEffectiveDate().getTime()) : null;
             this.expirationDate = null != state.getExpirationDate() ? new Date(state.getExpirationDate().getTime()) : null;
         }
@@ -122,6 +126,15 @@ public class StateInfo
     @Override
     public String getLifecycleKey() {
         return lifecycleKey;
+    }
+
+    @Override
+    public Boolean getIsInitialState() {
+        return this.isInitialState;
+    }
+
+    public void setIsInitialState(Boolean initialState) {
+        this.isInitialState = initialState;
     }
 
     public void setLifecycleKey(String lifecycleKey) {

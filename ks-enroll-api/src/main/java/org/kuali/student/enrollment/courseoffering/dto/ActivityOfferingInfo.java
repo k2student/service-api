@@ -20,25 +20,26 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.kuali.student.enrollment.courseoffering.infc.ActivityOffering;
+import org.kuali.student.enrollment.courseoffering.infc.OfferingInstructor;
+import org.kuali.student.r2.common.dto.TimeAmountInfo;
+import org.kuali.student.r2.common.dto.IdEntityInfo;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-import org.kuali.student.enrollment.courseoffering.infc.ActivityOffering;
-import org.kuali.student.enrollment.courseoffering.infc.OfferingInstructor;
-import org.kuali.student.r2.common.dto.TimeAmountInfo;
-import org.kuali.student.r2.common.dto.IdEntityInfo;
-
 import org.w3c.dom.Element;
-
+import java.io.Serializable;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ActivityOfferingInfo", propOrder = {
                 "id", "typeKey", "stateKey", "name", "descr", 
                 "formatOfferingId", "formatOfferingName",
-                "activityId", "termId", "termCode", "activityCode", "scheduleId", "schedulingStateKey",
+                "activityId", "termId", "termCode", "activityCode", 
+                "scheduleId", "schedulingStateKey",
                 "isHonorsOffering", "gradingOptionKeys", "instructors",
                 "weeklyInclassContactHours", "weeklyOutofclassContactHours", 
                 "weeklyTotalContactHours",  "isEvaluated",
@@ -47,12 +48,14 @@ import org.w3c.dom.Element;
                 "finalExamSpaceCode", "activityOfferingURL", 
                 "courseOfferingId", "courseOfferingTitle", 
                 "courseOfferingCode", "hasWaitlist", "waitlistTypeKey",
-                "waitlistMaximum", "isWaitlistCheckinRequired", "waitlistCheckinFrequency",
+                "waitlistMaximum", "isWaitlistCheckinRequired", 
+                "waitlistCheckinFrequency",
+                "isPartOfColocatedOfferingSet",
                 "meta", "attributes", "_futureElements"})
 
 public class ActivityOfferingInfo
     extends IdEntityInfo
-    implements ActivityOffering {
+    implements ActivityOffering, Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -149,6 +152,8 @@ public class ActivityOfferingInfo
     @XmlAnyElement
     private List<Element> _futureElements;
 
+    @XmlElement
+    private Boolean isPartOfColocatedOfferingSet;
 
     /**
      * Constructs a new ActivityOfferingInfo.
@@ -179,6 +184,7 @@ public class ActivityOfferingInfo
         this.activityId = offering.getActivityId();
         this.termId = offering.getTermId();
         this.scheduleId = offering.getScheduleId();
+        this.schedulingStateKey = offering.getSchedulingStateKey();
         this.activityCode = offering.getActivityCode();
 
         this.isHonorsOffering = offering.getIsHonorsOffering();
@@ -494,8 +500,6 @@ public class ActivityOfferingInfo
     public void setWaitlistCheckinFrequency(TimeAmountInfo waitlistCheckinFrequency) {
         this.waitlistCheckinFrequency = waitlistCheckinFrequency;
     }
-    
-    
 
     public void setSchedulingStateKey(String schedulingStateKey) {
 		this.schedulingStateKey = schedulingStateKey;
@@ -506,7 +510,16 @@ public class ActivityOfferingInfo
 		return schedulingStateKey;
 	}
 
-	@Override
+    @Override
+    public Boolean getIsPartOfColocatedOfferingSet() {
+        return isPartOfColocatedOfferingSet;
+    }
+
+    public void setIsPartOfColocatedOfferingSet(Boolean partOfColocatedOfferingSet) {
+        isPartOfColocatedOfferingSet = partOfColocatedOfferingSet;
+    }
+
+    @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("ActivityOfferingInfo [id=");

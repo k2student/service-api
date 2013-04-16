@@ -18,7 +18,6 @@ package org.kuali.student.r2.common.dto;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -42,7 +41,7 @@ import org.kuali.student.r2.common.infc.Criteria;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "CriteriaInfo", propOrder = { 
-                "comparisons", "maxResults" })//, "_futureElements" }) TODO KSCM-372: Non-GWT translatable code
+                "comparisons", "maxResults" , "_futureElements" }) 
 
 public class CriteriaInfo 
     implements Criteria, Serializable {
@@ -56,9 +55,9 @@ public class CriteriaInfo
     @XmlElement
     private Integer maxResults;
     
-//    TODO KSCM-372: Non-GWT translatable code
-//    @XmlAnyElement
-//    private List<Element> _futureElements;
+    
+    @XmlAnyElement
+    private List<Object> _futureElements;
 
 
     /**

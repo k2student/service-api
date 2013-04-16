@@ -15,9 +15,7 @@
 
 package org.kuali.student.r2.core.statement.dto;
 
-import org.kuali.student.r1.core.statement.dto.StatementOperatorTypeKey;
 import org.kuali.student.r2.common.dto.IdEntityInfo;
-import org.kuali.student.r2.common.dto.RichTextInfo;
 import org.kuali.student.r2.core.statement.infc.Statement;
 //import org.w3c.dom.Element;
 
@@ -33,8 +31,7 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "StatementInfo", propOrder = { "id", "typeKey", "stateKey",
 		"name", "descr", "operator", "statementIds", "reqComponentIds", "meta",
-		"attributes" })
-// , "_futureElements" }) TODO KSCM-372: Non-GWT translatable code})
+		"attributes" , "_futureElements" }) 
 public class StatementInfo extends IdEntityInfo implements Statement,
 		Serializable {
 
@@ -47,9 +44,8 @@ public class StatementInfo extends IdEntityInfo implements Statement,
 	@XmlElement
 	private List<String> reqComponentIds;
 
-	// TODO KSCM-372: Non-GWT translatable code
-	// @XmlAnyElement
-	// private List<Element> _futureElements;
+    @XmlAnyElement
+    private List<Object> _futureElements;  
 
 	public StatementInfo() {
 	}

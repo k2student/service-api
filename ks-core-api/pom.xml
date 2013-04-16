@@ -1,11 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.kuali.student.api</groupId>
         <artifactId>ks-api</artifactId>
-        <version>2.0.0-SNAPSHOT</version>
+        <version>2.0.0-M7-SNAPSHOT</version>
     </parent>
     <artifactId>ks-core-api</artifactId>
     <name>KS Core API</name>
@@ -62,7 +61,7 @@
                         <id>organization-wsdl</id>
                         <phase>${ks.java2ws.phase}</phase>
                         <configuration>
-                            <className>org.kuali.student.core.organization.service.OrganizationService</className>
+                            <className>org.kuali.student.r2.core.organization.service.OrganizationService</className>
                             <serviceName>OrganizationService</serviceName>
                             <targetNameSpace>http://student.kuali.org/wsdl/organization</targetNameSpace>
                         </configuration>
@@ -86,7 +85,7 @@
                         <id>atp-wsdl</id>
                         <phase>${ks.java2ws.phase}</phase>
                         <configuration>
-                            <className>org.kuali.student.core.atp.service.AtpService</className>
+                            <className>org.kuali.student.r2.core.atp.service.AtpService</className>
                             <serviceName>AtpService</serviceName>
                             <targetNameSpace>http://student.kuali.org/wsdl/atp</targetNameSpace>
                         </configuration>
@@ -98,7 +97,7 @@
                         <id>document-wsdl</id>
                         <phase>${ks.java2ws.phase}</phase>
                         <configuration>
-                            <className>org.kuali.student.core.document.service.DocumentService</className>
+                            <className>org.kuali.student.r2.core.document.service.DocumentService</className>
                             <serviceName>DocumentService</serviceName>
                             <targetNameSpace>http://student.kuali.org/wsdl/document</targetNameSpace>
                         </configuration>
@@ -110,7 +109,7 @@
                         <id>comment-wsdl</id>
                         <phase>${ks.java2ws.phase}</phase>
                         <configuration>
-                            <className>org.kuali.student.core.comment.service.CommentService</className>
+                            <className>org.kuali.student.r2.core.comment.service.CommentService</className>
                             <serviceName>CommentService</serviceName>
                             <targetNameSpace>http://student.kuali.org/wsdl/comment</targetNameSpace>
                         </configuration>
@@ -122,7 +121,7 @@
                         <id>proposal-wsdl</id>
                         <phase>${ks.java2ws.phase}</phase>
                         <configuration>
-                            <className>org.kuali.student.core.proposal.service.ProposalService</className>
+                            <className>org.kuali.student.r2.core.proposal.service.ProposalService</className>
                             <serviceName>ProposalService</serviceName>
                             <targetNameSpace>http://student.kuali.org/wsdl/proposal</targetNameSpace>
                         </configuration>
@@ -134,7 +133,7 @@
                         <id>statement-wsdl</id>
                         <phase>${ks.java2ws.phase}</phase>
                         <configuration>
-                            <className>org.kuali.student.core.statement.service.StatementService</className>
+                            <className>org.kuali.student.r2.core.statement.service.StatementService</className>
                             <serviceName>StatementService</serviceName>
                             <targetNameSpace>http://student.kuali.org/wsdl/statement</targetNameSpace>
                         </configuration>

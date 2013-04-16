@@ -14,12 +14,8 @@
  */
 package org.kuali.student.r2.lum.clu.service;
 
-import org.kuali.student.r1.common.search.dto.SearchCriteriaTypeInfo;
-import org.kuali.student.r1.common.search.dto.SearchRequest;
-import org.kuali.student.r1.common.search.dto.SearchResult;
-import org.kuali.student.r1.common.search.dto.SearchResultTypeInfo;
-import org.kuali.student.r1.common.search.dto.SearchTypeInfo;
-import org.kuali.student.r1.common.search.service.SearchService;
+import org.kuali.rice.core.api.criteria.QueryByCriteria;
+import org.kuali.student.r2.core.search.service.SearchService;
 import org.kuali.student.r2.common.dto.ContextInfo;
 import org.kuali.student.r2.common.dto.StatusInfo;
 import org.kuali.student.r2.common.dto.ValidationResultInfo;
@@ -57,8 +53,7 @@ import org.kuali.student.r2.common.exceptions.AlreadyExistsException;
  * Learning Unit (LU) Service
  *
  * @Author Kamal
- * @Version 2.0
- * @Author Sri komandur@uw.edu
+ * @version 2.0
  */
 @WebService(name = "CluService", targetNamespace = CluServiceConstants.NAMESPACE)
 @SOAPBinding(style = SOAPBinding.Style.DOCUMENT, use = SOAPBinding.Use.LITERAL, parameterStyle = SOAPBinding.ParameterStyle.WRAPPED)
@@ -760,6 +755,23 @@ public interface CluService extends VersionManagementService ,SearchService {
      */
     public List<CluResultInfo> getCluResultByClu(@WebParam(name = "cluId") String cluId, @WebParam(name = "contextInfo") ContextInfo contextInfo) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException;
 
+    /**
+     * Retrieves the list of cluResults for the cluIds specified
+     *
+     * @param cluIds       list of clu identifier's
+     * @param contextInfo Context information containing the principalId and
+     *                    locale information about the caller of service
+     *                    operation
+     * @return list of CluResults corresponding to the cluIds specified
+     * @throws DoesNotExistException     one or more of the cludIds does not exist.
+     * @throws InvalidParameterException invalid contextInfo
+     * @throws MissingParameterException missing cluIds or contextInfo
+     * @throws OperationFailedException  unable to complete request
+     * @throws PermissionDeniedException authorization failure
+     */
+    public List<CluResultInfo> getCluResultsByClus(@WebParam(name = "cluIds") List<String> cluIds, @WebParam(name = "contextInfo") ContextInfo contextInfo) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException;
+
+    
     /**
      * Retrieves the list of clu Ids with the results of the specified usage
      * type. This would for example allow requests for all clus which have a
@@ -1899,115 +1911,166 @@ public interface CluService extends VersionManagementService ,SearchService {
      * @throws UnsupportedActionException CLU set is dynamically determined
      */
     public StatusInfo removeCluFromCluSet(@WebParam(name = "cluId") String cluId, @WebParam(name = "cluSetId") String cluSetId, @WebParam(name = "contextInfo") ContextInfo contextInfo) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, UnsupportedActionException;
+    
+    /**
+     * Search for Clus using free form search criteria.
+     * 
+     * @param criteria the search criteria.
+     * @param contextInfo Context information containing the principalId and
+     *                    locale information about the caller of service
+     *                    operation
+     * @return the list of matching Clus
+     * @throws InvalidParameterException criteria or contextInfo is null
+     * @throws MissingParameterException missing criteria or contextInfo
+     * @throws OperationFailedException unable to complete request
+     * @throws PermissionDeniedException authorization failure
+     */
+    public List<CluInfo>searchForClus(@WebParam(name = "criteria") QueryByCriteria criteria,
+                                      @WebParam(name = "contextInfo") ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException;
+    
+    /**
+     * Search for Clu Ids using free form search criteria
+     * 
+     * @param criteria  the search criteria.
+     * @param contextInfo Context information containing the principalId and
+     *                    locale information about the caller of service
+     *                    operation
+     * @return the list of matching Clu Ids
+     * @throws InvalidParameterException criteria or contextInfo is null
+     * @throws MissingParameterException missing criteria or contextInfo
+     * @throws OperationFailedException unable to complete request
+     * @throws PermissionDeniedException authorization failure
+     */
+    public List<String>searchForCluIds(@WebParam(name = "criteria") QueryByCriteria criteria,
+            @WebParam(name = "contextInfo") ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException;
 
-    public SearchResult search(SearchRequest request) throws MissingParameterException;
-
-	/**
-	 *
-	 * This method ...
-	 *
-	 * @param searchCriteriaTypeKey
-	 * @return
-	 * @throws DoesNotExistException
-	 * @throws InvalidParameterException
-	 * @throws MissingParameterException
-	 * @throws OperationFailedException
-	 * @throws UnsupportedOperationException
-	 */
-	@Deprecated
-	public SearchCriteriaTypeInfo getSearchCriteriaType(@WebParam(name="searchCriteriaTypeKey") String searchCriteriaTypeKey) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, UnsupportedOperationException;
-
-	/**
-	 *
-	 * This method ...
-	 *
-	 * @return
-	 * @throws OperationFailedException
-	 * @throws UnsupportedOperationException
-	 */
-	@Deprecated
-	public List<SearchCriteriaTypeInfo> getSearchCriteriaTypes() throws OperationFailedException, UnsupportedOperationException;
-
-	/**
-	 *
-	 * This method ...
-	 *
-	 * @param searchResultTypeKey
-	 * @return
-	 * @throws DoesNotExistException
-	 * @throws InvalidParameterException
-	 * @throws MissingParameterException
-	 * @throws OperationFailedException
-	 * @throws UnsupportedOperationException
-	 */
-	@Deprecated
-	public SearchResultTypeInfo getSearchResultType(@WebParam(name="searchResultTypeKey") String searchResultTypeKey) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, UnsupportedOperationException;
-
-	/**
-	 *
-	 * This method ...
-	 *
-	 * @return
-	 * @throws OperationFailedException
-	 * @throws UnsupportedOperationException
-	 */
-	@Deprecated
-	public List<SearchResultTypeInfo> getSearchResultTypes() throws OperationFailedException, UnsupportedOperationException;
-
-	/**
-	 *
-	 * This method ...
-	 *
-	 * @param searchTypeKey
-	 * @return
-	 * @throws DoesNotExistException
-	 * @throws InvalidParameterException
-	 * @throws MissingParameterException
-	 * @throws OperationFailedException
-	 * @throws UnsupportedOperationException
-	 */
-	@Deprecated
-	public SearchTypeInfo getSearchType(@WebParam(name="searchTypeKey") String searchTypeKey) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, UnsupportedOperationException;
-
-	/**
-	 *
-	 * This method ...
-	 *
-	 * @return
-	 * @throws OperationFailedException
-	 * @throws UnsupportedOperationException
-	 */
-	@Deprecated
-	public List<SearchTypeInfo> getSearchTypes() throws OperationFailedException, UnsupportedOperationException;
-
-	/**
-	 *
-	 * This method ...
-	 *
-	 * @param searchCriteriaTypeKey
-	 * @return
-	 * @throws DoesNotExistException
-	 * @throws InvalidParameterException
-	 * @throws MissingParameterException
-	 * @throws OperationFailedException
-	 * @throws UnsupportedOperationException
-	 */
-	@Deprecated
-	public List<SearchTypeInfo> getSearchTypesByCriteria(@WebParam(name="searchCriteriaTypeKey") String searchCriteriaTypeKey) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, UnsupportedOperationException;
-
-	/**
-	 *
-	 * This method ...
-	 *
-	 * @param searchResultTypeKey
-	 * @return
-	 * @throws DoesNotExistException
-	 * @throws InvalidParameterException
-	 * @throws MissingParameterException
-	 * @throws OperationFailedException
-	 * @throws UnsupportedOperationException
-	 */
-	@Deprecated
-	public List<SearchTypeInfo> getSearchTypesByResult(@WebParam(name="searchResultTypeKey") String searchResultTypeKey) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, UnsupportedOperationException;
-
+    
+    /**
+     * Search for CluCluRelations using free form search criteria
+     * 
+     * @param criteria the search criteria.
+     * @param contextInfo Context information containing the principalId and
+     *                    locale information about the caller of service
+     *                    operation
+     * @return the list of matching CluCluRelations
+     * @throws InvalidParameterException criteria or contextInfo is null
+     * @throws MissingParameterException missing criteria or contextInfo
+     * @throws OperationFailedException unable to complete request
+     * @throws PermissionDeniedException authorization failure
+     */
+    public List<CluCluRelationInfo>searchForCluCluRelations(@WebParam(name = "criteria") QueryByCriteria criteria,
+    @WebParam(name = "contextInfo") ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException;
+    
+    /**
+     * Search for CluCluRelation Ids using free form search criteria
+     * 
+     * @param criteria the search criteria.
+     * @param contextInfo Context information containing the principalId and
+     *                    locale information about the caller of service
+     *                    operation
+     * @return the list of matching CluCluRelation Ids
+     * @throws InvalidParameterException criteria or contextInfo is null
+     * @throws MissingParameterException missing criteria or contextInfo
+     * @throws OperationFailedException unable to complete request
+     * @throws PermissionDeniedException authorization failure
+     */
+    public List<String>searchForCluCluRelationIds(@WebParam(name = "criteria") QueryByCriteria criteria,
+            @WebParam(name = "contextInfo") ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException;
+            
+    
+    /**
+     * Search for CluLoRelations using free form search criteria.
+     * 
+     * @param criteria the search criteria.
+     * @param contextInfo Context information containing the principalId and
+     *                    locale information about the caller of service
+     *                    operation
+     * @return the list of matching CluLoRelations
+     * @throws InvalidParameterException criteria or contextInfo is null
+     * @throws MissingParameterException missing criteria or contextInfo
+     * @throws OperationFailedException unable to complete request
+     * @throws PermissionDeniedException authorization failure
+     */
+    public List<CluLoRelationInfo>searchForCluLoRelations(@WebParam(name = "criteria") QueryByCriteria criteria,
+            @WebParam(name = "contextInfo") ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException;
+    
+    /**
+     * Search for CluLoRelation Ids using free form search criteria
+     * 
+     * @param criteria the search criteria.
+     * @param contextInfo Context information containing the principalId and
+     *                    locale information about the caller of service
+     *                    operation
+     * @return the list of matching CluLoRelation Ids
+     * @throws InvalidParameterException criteria or contextInfo is null
+     * @throws MissingParameterException missing criteria or contextInfo
+     * @throws OperationFailedException unable to complete request
+     * @throws PermissionDeniedException authorization failure
+     */
+    public List<String>searchForCluLoRelationIds(@WebParam(name = "criteria") QueryByCriteria criteria,
+            @WebParam(name = "contextInfo") ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException;
+    
+    /**
+     * Search for CluPublications using free form search criteria 
+     * 
+     * @param criteria the search criteria.
+     * @param contextInfo Context information containing the principalId and
+     *                    locale information about the caller of service
+     *                    operation
+     * @return the list of matching CluPublications
+     * @throws InvalidParameterException criteria or contextInfo is null
+     * @throws MissingParameterException missing criteria or contextInfo
+     * @throws OperationFailedException unable to complete request
+     * @throws PermissionDeniedException authorization failure
+     */
+    public List<CluPublicationInfo>searchForCluPublications(@WebParam(name = "criteria") QueryByCriteria criteria,
+            @WebParam(name = "contextInfo") ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException;
+    
+    /**
+     * Search for CluPublication Ids using free form search criteria 
+     * 
+     * @param criteria the search criteria.
+     * @param contextInfo Context information containing the principalId and
+     *                    locale information about the caller of service
+     *                    operation
+     * @return the list of matching CluPublication Ids
+     * @throws InvalidParameterException criteria or contextInfo is null
+     * @throws MissingParameterException missing criteria or contextInfo
+     * @throws OperationFailedException unable to complete request
+     * @throws PermissionDeniedException authorization failure
+     */
+    public List<String>searchForCluPublicationIds(@WebParam(name = "criteria") QueryByCriteria criteria,
+            @WebParam(name = "contextInfo") ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException;
+    
+    /**
+     * Search for CluResults using free form search criteria
+     * 
+     * @param criteria the search criteria.
+     * @param contextInfo Context information containing the principalId and
+     *                    locale information about the caller of service
+     *                    operation
+     * @return the list of matching CluResults
+     * @throws InvalidParameterException criteria or contextInfo is null
+     * @throws MissingParameterException missing criteria or contextInfo
+     * @throws OperationFailedException unable to complete request
+     * @throws PermissionDeniedException authorization failure
+     */
+    public List<CluResultInfo>searchForCluResults(@WebParam(name = "criteria") QueryByCriteria criteria,
+            @WebParam(name = "contextInfo") ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException;
+    
+    /**
+     * Search for CluResult Ids using free form search criteria
+     * 
+     * @param criteria the search criteria.
+     * @param contextInfo Context information containing the principalId and
+     *                    locale information about the caller of service
+     *                    operation
+     * @return the list of matching CluResult Ids
+     * @throws InvalidParameterException criteria or contextInfo is null
+     * @throws MissingParameterException missing criteria or contextInfo
+     * @throws OperationFailedException unable to complete request
+     * @throws PermissionDeniedException authorization failure
+     */
+    public List<String>searchForCluResultIds(@WebParam(name = "criteria") QueryByCriteria criteria,
+            @WebParam(name = "contextInfo") ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException;
 }

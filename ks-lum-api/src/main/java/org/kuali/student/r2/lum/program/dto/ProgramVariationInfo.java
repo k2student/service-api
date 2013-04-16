@@ -19,7 +19,6 @@ import javax.xml.bind.annotation.*;
 import org.kuali.student.r2.lum.program.dto.assembly.ProgramAtpAssembly;
 import org.kuali.student.r2.lum.program.dto.assembly.ProgramCodeAssembly;
 import org.kuali.student.r2.lum.program.dto.assembly.ProgramCommonAssembly;
-import org.kuali.student.r2.lum.program.dto.assembly.ProgramCredentialAssembly;
 import org.kuali.student.r2.lum.program.dto.assembly.ProgramFullOrgAssembly;
 import org.kuali.student.r2.lum.program.dto.assembly.ProgramIdentifierAssembly;
 import org.kuali.student.r2.lum.program.dto.assembly.ProgramPublicationAssembly;
@@ -73,16 +72,16 @@ import org.kuali.student.r2.lum.program.infc.ProgramVariation;
     "unitsFinancialResources",
     "unitsFinancialControl",
     "attributes",
-    "meta" })//, "_futureElements" }) TODO KSCM-372: Non-GWT translatable code
+    "meta" , "_futureElements" }) 
     
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ProgramVariationInfo extends CommonWithProgramVariationInfo implements ProgramVariation, ProgramCommonAssembly, ProgramIdentifierAssembly, 
     ProgramFullOrgAssembly, ProgramAtpAssembly, ProgramCodeAssembly, ProgramPublicationAssembly, ProgramRequirementAssembly, Serializable {
 
     private static final long serialVersionUID = 1L;
-//    TODO KSCM-372: Non-GWT translatable code
-//    @XmlAnyElement
-//    private List<Element> _futureElements;
+    
+    @XmlAnyElement
+    private List<Object> _futureElements;
 
     public ProgramVariationInfo() {
         super();

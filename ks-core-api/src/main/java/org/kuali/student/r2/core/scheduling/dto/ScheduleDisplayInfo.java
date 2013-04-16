@@ -16,24 +16,20 @@
  */
 package org.kuali.student.r2.core.scheduling.dto;
 
-import org.kuali.student.r2.common.dto.DateRangeInfo;
-import org.kuali.student.r2.common.dto.IdEntityInfo;
-import org.kuali.student.r2.common.infc.DateRange;
-import org.kuali.student.r2.core.atp.dto.AtpInfo;
-import org.kuali.student.r2.core.atp.infc.Atp;
-import org.kuali.student.r2.core.scheduling.infc.MeetingTime;
-import org.kuali.student.r2.core.scheduling.infc.Schedule;
-import org.kuali.student.r2.core.scheduling.infc.ScheduleComponent;
-import org.kuali.student.r2.core.scheduling.infc.ScheduleComponentDisplay;
-import org.kuali.student.r2.core.scheduling.infc.ScheduleDisplay;
-
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAnyElement;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
+
+import org.kuali.student.r2.common.dto.IdEntityInfo;
+import org.kuali.student.r2.core.atp.dto.AtpInfo;
+import org.kuali.student.r2.core.scheduling.infc.ScheduleComponentDisplay;
+import org.kuali.student.r2.core.scheduling.infc.ScheduleDisplay;
 
 /**
  * This class represents a reusable display object in the Scheduling Service for Schedules.
@@ -44,7 +40,7 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ScheduleDisplayInfo", propOrder = {"id", "typeKey", "stateKey", "name", "descr",
         "atp", "scheduleComponentDisplays",
-        "meta", "attributes"})//, "_futureElements" }) TODO KSCM-372: Non-GWT translatable code
+        "meta", "attributes", "_futureElements" }) 
 public class ScheduleDisplayInfo extends IdEntityInfo implements ScheduleDisplay, Serializable {
 
     ////////////////////////
@@ -57,9 +53,8 @@ public class ScheduleDisplayInfo extends IdEntityInfo implements ScheduleDisplay
     @XmlElement
     private List<ScheduleComponentDisplayInfo> scheduleComponentDisplays;
 
-//    TODO KSCM-372: Non-GWT translatable code
-//    @XmlAnyElement
-//    private List<Element> _futureElements;
+    @XmlAnyElement
+    private List<Object> _futureElements;  
 
     ////////////////////////
     // CONSTRUCTORS
@@ -71,10 +66,10 @@ public class ScheduleDisplayInfo extends IdEntityInfo implements ScheduleDisplay
     public ScheduleDisplayInfo(ScheduleDisplay scheduleDisplay) {
         super (scheduleDisplay);
         if (null != scheduleDisplay) {
-            this.atp= scheduleDisplay.getAtp();
+            this.atp= new AtpInfo(scheduleDisplay.getAtp());
             this.scheduleComponentDisplays = new ArrayList<ScheduleComponentDisplayInfo>();
-            for (ScheduleComponentDisplayInfo scheduleComponentDisplayInfo : scheduleDisplay.getScheduleComponentDisplays()) {
-                this.scheduleComponentDisplays.add(new ScheduleComponentDisplayInfo(scheduleComponentDisplayInfo));
+            for (ScheduleComponentDisplay scheduleComponentDisplay : scheduleDisplay.getScheduleComponentDisplays()) {
+                this.scheduleComponentDisplays.add(new ScheduleComponentDisplayInfo(scheduleComponentDisplay));
             }
         }
     }
@@ -93,8 +88,12 @@ public class ScheduleDisplayInfo extends IdEntityInfo implements ScheduleDisplay
     }
 
     @Override
-    public List<ScheduleComponentDisplayInfo> getScheduleComponentDisplays() {
-        return scheduleComponentDisplays;
+    public List<? extends ScheduleComponentDisplay> getScheduleComponentDisplays() {
+        if (this.scheduleComponentDisplays == null) {
+            return new ArrayList<ScheduleComponentDisplayInfo>();
+        } else {
+            return scheduleComponentDisplays;
+        }
     }
 
     public void setScheduleComponentDisplays(List<ScheduleComponentDisplayInfo> scheduleComponentDisplays) {

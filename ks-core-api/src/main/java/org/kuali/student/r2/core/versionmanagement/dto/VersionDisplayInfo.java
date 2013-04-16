@@ -11,8 +11,6 @@
 package org.kuali.student.r2.core.versionmanagement.dto;
 
 import org.kuali.student.r2.core.versionmanagement.infc.VersionDisplay;
-import org.w3c.dom.Element;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAnyElement;
@@ -31,7 +29,7 @@ import javax.xml.bind.annotation.XmlAttribute;
         "currentVersionEnd",
         "currentVersionStart",
         "versionComment",
-        "versionedFromId"})//, "_futureElements" }) TODO KSCM-372: Non-GWT translatable code})
+        "versionedFromId", "_futureElements" }) 
 public class VersionDisplayInfo implements VersionDisplay, Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -51,9 +49,8 @@ public class VersionDisplayInfo implements VersionDisplay, Serializable {
     private String versionComment;
     @XmlElement
     private String versionedFromId;
-//    TODO KSCM-372: Non-GWT translatable code
-//    @XmlAnyElement
-//    private List<Element> _futureElements;
+    @XmlAnyElement
+    private List<Object> _futureElements;  
 
     public VersionDisplayInfo() {
     }

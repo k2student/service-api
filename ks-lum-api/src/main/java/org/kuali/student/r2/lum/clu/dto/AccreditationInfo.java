@@ -27,7 +27,6 @@ import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Accreditation information
@@ -36,7 +35,7 @@ import java.util.Map;
  * @Author Sri komandur@uw.edu
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "AccreditationInfo", propOrder = {"id", "orgId", "effectiveDate", "expirationDate", "attributes", "meta" })//, "_futureElements" }) TODO KSCM-372: Non-GWT translatable code})
+@XmlType(name = "AccreditationInfo", propOrder = {"id", "orgId", "effectiveDate", "expirationDate", "attributes", "meta" , "_futureElements" }) 
 public class AccreditationInfo extends HasAttributesAndMetaInfo implements Accreditation, Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,9 +48,8 @@ public class AccreditationInfo extends HasAttributesAndMetaInfo implements Accre
     private Date effectiveDate;
     @XmlElement
     private Date expirationDate;
-//    TODO KSCM-372: Non-GWT translatable code
-//    @XmlAnyElement
-//    private List<Element> _futureElements;
+    @XmlAnyElement
+    private List<Object> _futureElements;  
 
     public AccreditationInfo() {
     }

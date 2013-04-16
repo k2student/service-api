@@ -18,7 +18,6 @@ package org.kuali.student.r2.lum.clu.dto;
 import org.kuali.student.r2.common.dto.IdNamelessEntityInfo;
 import org.kuali.student.r2.lum.clu.infc.CluIdentifier;
 
-import javax.xml.bind.Element;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAnyElement;
@@ -26,13 +25,12 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Detailed information about the human readable form of a CLU Identifier
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "CluIdentifierInfo", propOrder = {"id", "typeKey", "stateKey", "code", "shortName", "longName", "level", "division", "variation", "suffixCode", "orgId", "meta", "attributes" })//, "_futureElements" }) TODO KSCM-372: Non-GWT translatable code})
+@XmlType(name = "CluIdentifierInfo", propOrder = {"id", "typeKey", "stateKey", "code", "shortName", "longName", "level", "division", "variation", "suffixCode", "orgId", "meta", "attributes" , "_futureElements" }) 
 public class CluIdentifierInfo extends IdNamelessEntityInfo implements CluIdentifier, Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -61,9 +59,8 @@ public class CluIdentifierInfo extends IdNamelessEntityInfo implements CluIdenti
     @XmlElement
     private String orgId;
 
-//    TODO KSCM-372: Non-GWT translatable code
-//    @XmlAnyElement
-//    private List<Element> _futureElements;
+    @XmlAnyElement
+    private List<Object> _futureElements;  
 
     public CluIdentifierInfo() {
 
