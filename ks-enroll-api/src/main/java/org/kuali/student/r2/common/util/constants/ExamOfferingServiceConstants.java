@@ -12,7 +12,7 @@
  * or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  *
- * Created by Mezba Mahtab (mezba.mahtab@utoronto.ca) on 2/15/13
+ * Created by Mezba Mahtab (mezba.mahtab@utoronto.ca) on 7/15/13
  */
 package org.kuali.student.r2.common.util.constants;
 

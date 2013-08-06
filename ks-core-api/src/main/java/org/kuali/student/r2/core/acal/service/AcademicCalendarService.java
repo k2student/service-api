@@ -871,7 +871,7 @@ public interface AcademicCalendarService {
     /**
      * Updates an existing Holiday Calendar. The HolidayCalendar Id,
      * Type, and Meta information may not be changed.
-     *
+     * 
      * @param holidayCalendarId the identifier for the
      *        HolidayCalendar to be updated
      * @param holidayCalendarInfo the new data for the HolidayCalendar
