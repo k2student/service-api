@@ -1,4 +1,14 @@
+# emacs files
+*~
+\#*
+.\#*
+
+# build files
 *.class
+.gradle
+
+# osx files
+.DS_Store
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
